@@ -40,7 +40,6 @@ class CulturalWorkController extends Controller
         return view('culturalWork.show', compact('culturalWork'));
     }
 
-
     public function edit(CulturalWork $culturalWork){
 
     }

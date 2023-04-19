@@ -3,11 +3,11 @@
 
     <h2>Bienvenido a la zona administrativa {{ auth()->user()->name }}</h2>
     <div class="row">
-        <div class="d-flex justify-content-around col-12">
-            <div class="d-flex flex-column">
+        <div class="d-flex col-12">
+            <div class="d-flex mx-2 flex-column">
                 <h4>Últimos usuarios</h4>
                 <div class="table-responsive">
-                    <table class="table table-dark table-stripped">
+                    <table class="table table-stripped">
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
@@ -25,10 +25,10 @@
                     </table>
                 </div>
             </div>
-            <div class="d-flex flex-column">
+            <div class="d-flex mx-2 flex-column">
                 <h4>Últimas obras</h4>
                 <div class="table-responsive">
-                    <table class="table table-dark table-stripped">
+                    <table class="table table-stripped">
                         <tr>
                             <th>ID</th>
                             <th>Titulo</th>
@@ -46,10 +46,10 @@
                     </table>
                 </div>
             </div>
-            <div class="d-flex flex-column">
+            <div class="d-flex mx-2 flex-column">
                 <h4>Últimos autores</h4>
                 <div class="table-responsive">
-                    <table class="table table-dark table-stripped">
+                    <table class="table table-stripped">
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
