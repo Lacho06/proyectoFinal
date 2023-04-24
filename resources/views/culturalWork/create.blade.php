@@ -102,18 +102,19 @@
                                         </x-adminlte-textarea>
                                     </div>
                                 </div>
-                                <div class="d-flex mx-4 my-1">
-                                    <div class="d-flex flex-column bg-info">
-                                        <x-adminlte-input-file name="image" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}" disable-feedback></x-adminlte-input-file>
-                                        <div class="image-container" style="width: 100%; height: 60%; aspect-ratio: 4/4; display: flex; border: 0.1px solid gray; z-index: 5;">
-                                            <span class="m-auto">No hay ninguna imagen seleccionada</span>
+                                <div class="d-flex mx-4 mt-1">
+                                    <div class="d-flex flex-column">
+                                        <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}" disable-feedback></x-adminlte-input-file>
+                                        <div style="width: 100%; aspect-ratio: 1/1; display: flex; border: 1px solid rgba(128, 128, 128, .5); z-index: 5;">
+                                            <img class="image-container" alt="">
+                                            <span class="m-auto text-secondary px-5">No hay ninguna imagen seleccionada</span>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column mx-4">
                                         <x-adminlte-input type="number" name="budget" label="Presupuesto" placeholder="Presupuesto..." value="{{ old('budget') }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
-                                                    <i class="fas fa-map-marker-alt text-lightblue"></i>
+                                                    <i class="fas fa-donate text-lightblue"></i>
                                                 </div>
                                             </x-slot>
                                         </x-adminlte-input>
@@ -134,5 +135,22 @@
             </div>
         </div>
     </div>
+
+@endsection
+@section('js')
+
+    {{-- TODO: arreglar el js --}}
+    <script>
+        const handleChange = (e) => {
+            let file = e.target.file[0]
+            let reader = new FileReader()
+            reader.onload = (e) => {
+                document.querySelector('.image-container').setAttribute('src', e.target.result)
+            }
+            reader.readAsDataURL(file)
+        }
+
+        document.querySelector('.image-value').addEventListener('change', handleChange)
+    </script>
 
 @endsection

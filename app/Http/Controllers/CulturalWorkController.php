@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CulturalWorkRequest;
 use App\Models\Author;
 use App\Models\CulturalWork;
+use App\Notifications\CulturalWorkRestored;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,6 +35,10 @@ class CulturalWorkController extends Controller
         $message = "Obra Creada";
         Session::flash('message', $message);
 
+        if($request->state_of_disrepair == "Restaurada"){
+            Notification::send($culturalWork, new CulturalWorkRestored(['name' => $culturalWork->name]));
+        }
+
         return redirect()->route('culturalWork.show', $culturalWork);
     }
 
@@ -46,6 +52,11 @@ class CulturalWorkController extends Controller
 
     public function update(Request $request, CulturalWork $culturalWork){
 
+
+
+        if($request->state_of_disrepair == "Restaurada"){
+            Notification::send($culturalWork, new CulturalWorkRestored(['name' => $culturalWork->name]));
+        }
     }
 
     public function destroy(CulturalWork $culturalWork){
