@@ -103,8 +103,20 @@
                                     </div>
                                 </div>
                                 <div class="d-flex mx-4 my-1">
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex flex-column bg-info">
                                         <x-adminlte-input-file name="image" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}" disable-feedback></x-adminlte-input-file>
+                                        <div class="image-container" style="width: 100%; height: 60%; aspect-ratio: 4/4; display: flex; border: 0.1px solid gray; z-index: 5;">
+                                            <span class="m-auto">No hay ninguna imagen seleccionada</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column mx-4">
+                                        <x-adminlte-input type="number" name="budget" label="Presupuesto" placeholder="Presupuesto..." value="{{ old('budget') }}" label-class="text-lightblue">
+                                            <x-slot name="prependSlot">
+                                                <div class="input-group-text">
+                                                    <i class="fas fa-map-marker-alt text-lightblue"></i>
+                                                </div>
+                                            </x-slot>
+                                        </x-adminlte-input>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between ml-auto my-3">
