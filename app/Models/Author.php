@@ -34,4 +34,8 @@ class Author extends Model
         ]);
     }
 
+
+    public function culturalWork(){
+        return $this->hasMany(CulturalWork::class);
+    }
 }

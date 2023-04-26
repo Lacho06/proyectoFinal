@@ -9,13 +9,18 @@
         $heads = [
             ['label' => 'ID', 'width' => 10],
             ['label' => 'Año', 'width' => 20],
-            ['label' => 'Presupuesto', 'width' => 20],
+            ['label' => 'Presupuesto anual', 'width' => 20],
             ['label' => 'Aprobación', 'width' => 20],
             ['label' => 'Acciones', 'no-export' => true, 'width' => 20],
         ];
     @endphp
     <div class="d-flex mb-4">
-        <a href="{{ route('user.create') }}" class="ml-auto">
+        <a href="{{ route('restorationPlan.create') }}" class="ml-auto">
+            <button class="btn btn-xs text-white py-2 px-3 mx-1 shadow" style="background-color: #202A62;" title="Generar Reporte">
+                <span>Generar Reporte</span>
+            </button>
+        </a>
+        <a href="{{ route('restorationPlan.create') }}">
             <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
                 <i class="fa fa-plus"></i>
                 <span>Agregar</span>
@@ -28,15 +33,21 @@
                 <td>{{ $plan->id }}</td>
                 <td>{{ $plan->year }}</td>
                 <td>{{ $plan->annual_budget }} CUP</td>
-                <td>{{ $plan->approval }}</td>
+                <td>
+                    @if ($plan->approval == 1)
+                        aprobado
+                    @else
+                        no aprobado
+                    @endif
+                </td>
                 <td class="d-flex justify-content-center">
-                    <a href="{{ route('user.show', $plan) }}">
+                    <a href="{{ route('restorationPlan.show', $plan->id) }}">
                         <button class="btn btn-xs btn-success text-white py-1 mx-1 shadow" title="Ver">
                             <i class="fa fa-lg fa-fw fa-eye"></i>
                             <span>Ver</span>
                         </button>
                     </a>
-                    <a href="{{ route('user.edit', $plan) }}">
+                    <a href="{{ route('restorationPlan.edit', $plan->id) }}">
                         <button class="btn btn-xs btn-warning text-white py-1 mx-1 shadow" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                             <span>Editar</span>
@@ -46,7 +57,7 @@
                         <i class="fa fa-lg fa-fw fa-trash"></i>
                         <span>Eliminar</span>
                     </button>
-                    <form action="{{ route('user.destroy', $plan) }}" class="d-none form-delete" method="post">
+                    <form action="{{ route('restorationPlan.destroy', $plan) }}" class="d-none form-delete" method="post">
                         @csrf @method("DELETE")
                         <input type="submit" value="Send">
                     </form>

@@ -16,7 +16,8 @@ class CulturalWork extends Model
         'location',
         'review',
         'state_of_disrepair',
-        'budget'
+        'budget',
+        'image'
     ];
 
     public static function saveCulturalWork($data, $url){
@@ -39,6 +40,7 @@ class CulturalWork extends Model
             'restore_permission' => $data->restore_permission,
             'state_of_disrepair' => $data->state_of_disrepair,
             'review' => $data->review,
+            'budget' => $data->budget,
             'image' => $url,
             'author_id' => $author_id,
             'restoration_plan_id' => $plan_id
@@ -47,5 +49,26 @@ class CulturalWork extends Model
         return $culturalWork;
     }
 
+    public function updateCulturalWork($data, $url){
+        $this->update([
+            'title' => $data->title,
+            'year_of_stablishment' => $data->year_of_stablishment,
+            'location' => $data->location,
+            'restore_permission' => $data->restore_permission,
+            'state_of_disrepair' => $data->state_of_disrepair,
+            'review' => $data->review,
+            'budget' => $data->budget,
+            'image' => $url,
+            'author_id' => $data->author_id,
+            'restoration_plan_id' => $data->plan_id
+        ]);
+    }
 
+    public function author(){
+        return $this->belongsTo(Author::class);
+    }
+
+    public function score(){
+        return $this->hasMany(Score::class);
+    }
 }

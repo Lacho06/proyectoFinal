@@ -35,13 +35,13 @@
                 <td>{{ $culturalWork->state_of_disrepair }}</td>
                 <td>{{ $culturalWork->year_of_stablishment }}</td>
                 <td class="d-flex justify-content-center">
-                    <a href="{{ route('user.show', $culturalWork) }}">
+                    <a href="{{ route('culturalWork.show', $culturalWork) }}">
                         <button class="btn btn-xs btn-success text-white py-1 mx-1 shadow" title="Ver">
                             <i class="fa fa-lg fa-fw fa-eye"></i>
                             <span>Ver</span>
                         </button>
                     </a>
-                    <a href="{{ route('user.edit', $culturalWork) }}">
+                    <a href="{{ route('culturalWork.edit', $culturalWork) }}">
                         <button class="btn btn-xs btn-warning text-white py-1 mx-1 shadow" title="Editar">
                             <i class="fa fa-lg fa-fw fa-pen"></i>
                             <span>Editar</span>
@@ -51,7 +51,7 @@
                         <i class="fa fa-lg fa-fw fa-trash"></i>
                         <span>Eliminar</span>
                     </button>
-                    <form action="{{ route('user.destroy', $culturalWork) }}" class="d-none form-delete" method="post">
+                    <form action="{{ route('culturalWork.destroy', $culturalWork) }}" class="d-none form-delete" method="post">
                         @csrf @method("DELETE")
                         <input type="submit" value="Send">
                     </form>

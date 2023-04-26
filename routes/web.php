@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth.basic', 'menu.admin'])->names('plan');
+Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth', 'menu.admin'])->names('restorationPlan');
 
-Route::resource('admin/author', AuthorController::class)->middleware(['auth.basic', 'menu.admin'])->names('author');
+Route::resource('admin/author', AuthorController::class)->middleware(['auth', 'menu.admin'])->names('author');
 
-Route::resource('admin/cultural-work', CulturalWorkController::class)->middleware(['auth.basic', 'menu.admin'])->names('culturalWork');
+Route::resource('admin/cultural-work', CulturalWorkController::class)->middleware(['auth', 'menu.admin'])->names('culturalWork');
 
-Route::resource('admin/user', UserController::class)->middleware(['auth.basic', 'menu.admin'])->names('user');
+Route::resource('admin/user', UserController::class)->middleware(['auth', 'menu.admin'])->names('user');
 
-Route::resource('admin', AdminController::class)->only(['index'])->middleware(['auth.basic', 'menu.admin'])->names('admin');
+Route::resource('admin', AdminController::class)->only(['index'])->middleware(['auth', 'menu.admin'])->names('admin');
 
 Auth::routes();

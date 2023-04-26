@@ -10,50 +10,53 @@
     @endif
 
     <div class="row">
-        <div class="col-12 col-md-8 d-flex m-0 p-0">
-            <div class="col-12 card m-0 py-3 px-5">
-                <div class="card-body">
-                    <div class="d-flex justify-content-around">
-                        <div class="d-flex flex-column px-4 mt-3 mb-auto">
-                            @if ($culturalWork->image)
-                                <img class="rounded-circle border border-dark" width="80" height="80" src="{{ Storage::url($culturalWork->image) }}" alt="{{ $culturalWork->title }}">
-                            @else
-                                <img class="rounded-circle border border-dark" width="80" height="80" src="{{ asset('src/icons/user.png') }}" alt="{{ $culturalWork->title }}">
-                            @endif
-                        </div>
-                        <div class="d-flex flex-column my-auto">
-                            <div class="d-flex my-1 w-100">
-                                <h3 class="my-auto mx-3">Nombre:</h3>
-                                <div class="border border-dark px-3 py-1 flex-wrap my-2 w-100 ml-auto" style="width: 250px !important;">
-                                    <p class="my-auto">{{ $culturalWork->title }}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex my-1 w-100">
-                                <h3 class="my-auto mx-3">Apellido:</h3>
-                                <div class="border border-dark px-3 py-1 flex-wrap my-2 w-100 ml-auto" style="width: 250px !important;">
-                                    <p class="my-auto">{{ $culturalWork->year_of_stablishment }}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex my-1 w-100">
-                                <h3 class="my-auto mx-3">Correo:</h3>
-                                <div class="border border-dark px-3 py-1 flex-wrap my-2 w-100 ml-auto" style="width: 250px !important;">
-                                    <p class="my-auto">{{ $culturalWork->state_of_disrepair }}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex my-1 w-100">
-                                <h3 class="my-auto mx-3">Teléfono:</h3>
-                                <div class="border border-dark px-3 py-1 flex-wrap my-2 w-100 ml-auto" style="width: 250px !important;">
-                                    <p class="my-auto">{{ $culturalWork->budget }}</p>
-                                </div>
-                            </div>
-                            <div class="d-flex my-1 w-100">
-                                <h3 class="my-auto mx-3">Solapín:</h3>
-                                {{-- <div class="border border-dark d-flex flex-wrap px-3 py-1 my-2 w-100 ml-auto" style="width: 250px !important;">
-                                    <p class="my-auto">{{ $culturalWork->solapin }}</p>
-                                </div> --}}
-                            </div>
-                        </div>
+        <div class="col-12 card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="d-flex flex-column mx-auto">
+                        <h3>Título:</h3>
+                        <p class="text-center">{{ $culturalWork->title }}</p>
+                        @if ($culturalWork->image)
+                            <img src="{{ Storage::url($culturalWork->image) }}" class="card-image" alt="Imagen de la obra {{ $culturalWork->title }}">
+                        @endif
+                        <h3>Reseña:</h3>
+                        <p class="mx-auto p-5 border">{{ $culturalWork->review }}</p>
                     </div>
+                </div>
+                <div class="d-flex justify-content-around p-3">
+                    <div class="d-flex flex-column">
+                        <p>Ubicación: <span>{{ $culturalWork->location }}</span></p>
+                        <p>Autor:
+                            @if ($culturalWork->author)
+                                <span>{{ $culturalWork->author->name }}</span>
+                            @endif
+                        </p>
+                        {{-- TODO: pendiente agregar la puntuacion --}}
+                        <p>Popularidad media: <span>puntuacion</span></p>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <p>Año de instauración: <span>{{ $culturalWork->year_of_stablishment }}</span></p>
+                        <p>Permiso de restauración: <span>{{ $culturalWork->restore_permission }}</span></p>
+                        <p>Estado de deterioro: <span>{{ $culturalWork->state_of_disrepair }}</span></p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around mx-3">
+                    <table class="table table-bordered mx-5">
+                        <tr>
+                            <th>Restauraciones pasadas</th>
+                        </tr>
+                        <tr>
+                            {{-- TODO: falta llenar las tablas --}}
+                        </tr>
+                    </table>
+                    <table class="table table-bordered mx-5">
+                        <tr>
+                            <th>Restauraciones futuras</th>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

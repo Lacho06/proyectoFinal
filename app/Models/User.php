@@ -57,6 +57,7 @@ class User extends Authenticatable
             'phone' => $data->phone,
             'solapin' => $data->solapin,
             'image' => $url,
+            'role' => $data->role,
         ]);
 
         return $user;
@@ -69,8 +70,13 @@ class User extends Authenticatable
             'email' => $data->email,
             'phone' => $data->phone,
             'solapin' => $data->solapin,
-            'image' => $url
+            'image' => $url,
+            'role' => $data->role,
         ]);
 
+    }
+
+    public function scores(){
+        return $this->hasMany(Score::class);
     }
 }

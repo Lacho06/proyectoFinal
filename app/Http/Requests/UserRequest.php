@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
             'solapin' => 'required',
             'password' => 'required|min:8',
             'image' => 'nullable|image',
-            'role_id' => 'nullable'
+            'role' => 'nullable'
         ];
 
         if($this->method('PUT')){
@@ -42,7 +42,7 @@ class UserRequest extends FormRequest
                 'phone' => 'required|numeric',
                 'solapin' => 'required',
                 'image' => 'nullable|image',
-                'role_id' => 'nullable'
+                'role' => 'nullable'
             ];
         }else{
             return $rules;

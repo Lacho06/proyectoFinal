@@ -71,11 +71,18 @@
                                 </div>
                                 <div class="d-flex justify-content-between mx-4 my-3">
                                     <div class="d-flex flex-column mb-auto">
-                                        <label for="role_id" class="form-check-label">
-                                            {{-- TODO: falta poner en check al admin --}}
-                                            <input type="checkbox" name="role_id" class="form-check-input">
-                                            <span>Administrador</span>
-                                        </label>
+                                        <x-adminlte-select2 name="role" label="Rol" data-placeholder="Rol..." value="{{ old('role', $user->role) }}" label-class="text-lightblue"
+                                            igroup-size="md">
+                                            <x-slot name="prependSlot">
+                                                <div class="input-group-text">
+                                                    <i class="far fa-chart-bar text-lightblue"></i>
+                                                </div>
+                                            </x-slot>
+                                            <option default value="Seleccione una opción">Seleccione una opción</option>
+                                            <option value="administrador">Administrador</option>
+                                            <option value="vicerector">Vicerector</option>
+                                            <option value="asistente">Asistente del vicerector</option>
+                                        </x-adminlte-select2>
                                     </div>
                                     <div class="d-flex flex-column my-1">
                                         <button type="submit" class="btn btn-xs btn-warning text-white py-2 px-3 shadow" title="Editar">

@@ -14,12 +14,21 @@
             <div class="col-12 card m-0 py-3 px-5">
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
-                        <div class="d-flex flex-column px-4 mt-3 mb-auto">
-                            @if ($user->image)
-                                <img class="rounded-circle border border-dark" width="80" height="80" src="{{ Storage::url($user->image) }}" alt="{{ $user->name }}">
-                            @else
-                                <img class="rounded-circle border border-dark" width="80" height="80" src="{{ asset('src/icons/user.png') }}" alt="{{ $user->name }}">
-                            @endif
+                        <div class="d-flex flex-column mt-3 mb-auto">
+                            <img class="rounded-circle mx-auto border border-dark" width="80" height="80" src="{{ asset('src/icons/user.png') }}" alt="">
+                            <div class="mx-auto mt-2">
+                                <p class="mt-4 my-auto d-flex">
+                                    @if ($user->role == 'administrador')
+                                        <span class="text-center">Administrador</span>
+                                    @endif
+                                    @if ($user->role == 'vicerector')
+                                        <span class="text-center">Vicerector</span>
+                                    @endif
+                                    @if ($user->role == 'asistente')
+                                        <span class="text-center">Asistente del vicerector</span>
+                                    @endif
+                                </p>
+                            </div>
                         </div>
                         <div class="d-flex flex-column my-auto">
                             <div class="d-flex my-1 w-100">

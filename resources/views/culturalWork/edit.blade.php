@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content_header')
-    <h2>Crear obra</h2>
+    <h2>Editar obra</h2>
     <div class="mb-3"></div>
 @endsection
 @section('content')
@@ -10,12 +10,12 @@
             <div class="col-12 card m-0 ml-3 mb-4 py-2">
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
-                        <form action="{{ route('culturalWork.store') }}" enctype="multipart/form-data" method="POST" class="form">
-                            @csrf
+                        <form action="{{ route('culturalWork.update', $culturalWork) }}" enctype="multipart/form-data" method="POST" class="form">
+                            @csrf @method('PUT')
                             <div class="d-flex flex-column">
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input name="title" label="Título" placeholder="Título..." value="{{ old('title') }}" label-class="text-lightblue">
+                                        <x-adminlte-input name="title" label="Título" placeholder="Título..." value="{{ old('title', $culturalWork->title) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-bold text-lightblue"></i>
@@ -24,7 +24,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input type="number" name="year_of_stablishment" label="Año de instauración" placeholder="Año de instauración..." value="{{ old('year_of_stablishment') }}" label-class="text-lightblue">
+                                        <x-adminlte-input type="number" name="year_of_stablishment" label="Año de instauración" placeholder="Año de instauración..." value="{{ old('year_of_stablishment', $culturalWork->year_of_stablishment) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="far fa-calendar-alt text-lightblue"></i>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input name="location" label="Ubicación" placeholder="Ubicación..." value="{{ old('location') }}" label-class="text-lightblue">
+                                        <x-adminlte-input name="location" label="Ubicación" placeholder="Ubicación..." value="{{ old('location', $culturalWork->location) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-map-marker-alt text-lightblue"></i>
@@ -44,7 +44,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-select2 name="restore_permission" label="Permiso de restauración" data-placeholder="Permiso de restauración..." value="{{ old('restore_permission') }}" label-class="text-lightblue"
+                                        <x-adminlte-select2 name="restore_permission" label="Permiso de restauración" data-placeholder="Permiso de restauración..." value="{{ old('restore_permission', $culturalWork->restore_permission) }}" label-class="text-lightblue"
                                             igroup-size="md">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-select2 name="state_of_disrepair" label="Estado de deterioro" data-placeholder="Estado de deterioro..." value="{{ old('state_of_disrepair') }}" label-class="text-lightblue"
+                                        <x-adminlte-select2 name="state_of_disrepair" label="Estado de deterioro" data-placeholder="Estado de deterioro..." value="{{ old('state_of_disrepair', $culturalWork->state_of_disrepair) }}" label-class="text-lightblue"
                                             igroup-size="md">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
@@ -83,7 +83,11 @@
                                             </x-slot>
                                             <option default value="Seleccione una opción">Seleccione una opción</option>
                                             @forelse ($authors as $author)
-                                                <option value="{{ $author->id }}">{{ $author->name }}</option>
+                                                <option value="{{ $author->id }}"
+                                                    @if ($culturalWork->author->id == $author->id)
+                                                        checked
+                                                    @endif
+                                                >{{ $author->name }}</option>
                                             @empty
                                                 <option>No hay autores disponibles</option>
                                             @endforelse
@@ -93,7 +97,7 @@
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4 w-100">
                                         <x-adminlte-textarea name="review" label="Reseña" rows=8 igroup-size="sm"
-                                            label-class="text-primary" value="{{ old('review') }}" placeholder="Reseña..." disable-feedback>
+                                            label-class="text-primary" value="{{ old('review', $culturalWork->review) }}" placeholder="Reseña..." disable-feedback>
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-align-justify text-lightblue"></i>
@@ -104,14 +108,14 @@
                                 </div>
                                 <div class="d-flex mx-4 mt-1">
                                     <div class="d-flex flex-column">
-                                        <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}" disable-feedback></x-adminlte-input-file>
+                                        <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image', $culturalWork->image) }}" disable-feedback></x-adminlte-input-file>
                                         <div style="width: 100%; aspect-ratio: 1/1; display: flex; border: 1px solid rgba(128, 128, 128, .5); z-index: 5;">
-                                            <img class="image-container" alt="">
+                                            <img class="image-container" src="{{ Storage::url($culturalWork->image) }}" alt="">
                                             <span class="m-auto text-secondary px-5">No hay ninguna imagen seleccionada</span>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column mx-4">
-                                        <x-adminlte-input type="number" name="budget" label="Presupuesto" placeholder="Presupuesto..." value="{{ old('budget') }}" label-class="text-lightblue">
+                                        <x-adminlte-input type="number" name="budget" label="Presupuesto" placeholder="Presupuesto..." value="{{ old('budget', $culturalWork->budget) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-dollar-sign text-lightblue"></i>
@@ -122,9 +126,9 @@
                                 </div>
                                 <div class="d-flex justify-content-between ml-auto my-3">
                                     <div class="d-flex flex-column my-1">
-                                        <button type="submit" class="btn btn-xs btn-success text-white py-2 px-3 shadow" title="Enviar">
+                                        <button type="submit" class="btn btn-xs btn-warning text-white py-2 px-3 shadow" title="Enviar">
                                             <i class="fa fa-arrow-circle-right fa-lg"></i>
-                                            <span>Enviar</span>
+                                            <span>Editar</span>
                                         </button>
                                     </div>
                                 </div>

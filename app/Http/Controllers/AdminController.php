@@ -9,9 +9,10 @@ use App\Models\User;
 class AdminController extends Controller
 {
     public function index(){
-        $users = User::take('5')->orderBy('updated_at', 'desc')->get();
-        $culturalWorks = CulturalWork::take('5')->orderBy('updated_at', 'desc')->get();
-        $authors = Author::take('5')->orderBy('updated_at', 'desc')->get();
-        return view('admin.index', compact('users', 'culturalWorks', 'authors'));
+        if(auth()->user()->role == 'administrador'){
+            return redirect()->route('user.index');
+        }else if(auth()->user()->role == 'vicerector' || auth()->user()->role == 'asistente'){
+            return redirect()->route('culturalWork.index');
+        }
     }
 }

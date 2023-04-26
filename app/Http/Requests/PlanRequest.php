@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CulturalWorkRequest extends FormRequest
+class PlanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,9 @@ class CulturalWorkRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title' => 'required',
-            'year_of_stablishment' => 'required|numeric',
-            'location' => 'required',
-            'restore_permission' => 'required',
-            'state_of_disrepair' => 'required',
-            'author_id' => 'required',
-            'review' => 'required',
-            'budget' => 'required',
-            'image' => 'nullable|image'
+            'year' => 'required|numeric',
+            'annual_budget' => 'required|numeric',
+            'approval' => 'nullable',
         ];
 
         return $rules;

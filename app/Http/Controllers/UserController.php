@@ -33,7 +33,7 @@ class UserController extends Controller
 
         return redirect()->route('user.show', $user);
     }
-    // TODO: pendiente poner si es admin o no en la vista
+
     public function show(User $user){
         return view('user.show', compact('user'));
     }
