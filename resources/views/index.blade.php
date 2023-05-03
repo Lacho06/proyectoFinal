@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Patrimonio Cultural</title>
     @vite(['resources/js/app.js', 'resources/sass/app.scss'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <style>
         *{
@@ -25,7 +26,7 @@
         }
 
         .my-btn{
-            padding: 10px 40px;
+            padding: 5px;
             color: white;
             background: #202A62;
             border: 1px solid transparent;
@@ -42,6 +43,75 @@
         a:hover{
             color:white;
         }
+
+        .my-card{
+            min-width: 300px;
+            max-width: 300px;
+            min-height: 300px;
+            max-height: 300px;
+            overflow: hidden;
+        }
+
+        .my-title-container{
+            width: 100%;
+        }
+
+        .my-title{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 1.5em;
+        }
+
+        .my-author{
+            font-size: .8em;
+        }
+
+        .my-author span{
+            font-weight: 600;
+            font-size: .9em;
+        }
+        .my-card-hover{
+            text-align: center;
+            transform: scale(1);
+            border: 1px solid gray;
+        }
+        .my-card-hover:hover{
+            transform: scale(.96);
+            border: 1px dashed hsla(220, 80%, 40%, .4);
+            transition: transform 5s 4s border 2s;
+        }
+
+        .my-card-hover:hover .my-title{
+            background: white;
+        }
+
+        .my-login{
+            transform: scale(1);
+        }
+
+        .my-login:hover{
+            transform: scale(.9);
+        }
+
+        .my-search-icon{
+            padding: 5px;
+            transform: scale(1.4);
+        }
+
+        .my-search-icon:hover{
+            background: #202A62;
+            color: white;
+            border-radius: 50%;
+            transform: scale(1.3);
+            transition: transform 1s;
+        }
+
+        .my-search{
+            border: none;
+            outline: none;
+        }
+
     </style>
 </head>
 <body>
@@ -50,11 +120,11 @@
         <h2 class="my-auto text-white">Patrimonio Cultural</h2>
         <div class="d-flex justify-content-end">
             @auth
+                {{-- Arreglar el cerrar sesion  --}}
                 <a href="{{ route('logout') }}" class="btn btn-danger mx-2 my-auto">Cerrar sesión</a>
             @endauth
             @guest
-                <a href="{{ route('login') }}" class="btn btn-success mx-2 my-auto">Iniciar sesión</a>
-                <a href="{{ route('register') }}" class="btn btn-danger mx-2 my-auto">Registrarse</a>
+                <a href="{{ route('login') }}" class="text-white my-login mx-2 my-auto">Iniciar sesión</a>
             @endguest
         </div>
     </nav>
@@ -62,39 +132,93 @@
     <div class="d-flex">
         <h2 class="mx-auto">Bienvenido al Patrimonio Cultural de la UCI</h2>
     </div>
+
+    {{-- Buscador --}}
+    <div class="row">
+        <div class="col-3 my-4 mx-auto">
+            <div class="card">
+                <div class="d-flex justify-content-between align-items-center py-2 px-4">
+                    <i class="fa fa-search my-search-icon"></i>
+                    <input type="search" name="search" class="my-search">
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- Fin buscador --}}
     {{-- Cards --}}
     <div class="container mx-auto">
         <div class="row">
             @foreach ($culturalWorks as $culturalWork)
-            {{-- TODO: la clase card hay q ponerla en otro div dentro de este --}}
-                <div class="card col-12 col-md-3 my-3">
-                    <div class="card-image">
-                        <img src="{{ Storage::url($culturalWork->image) }}" alt="{{ $culturalWork->title }}">
-                    </div>
-                    <div class="card-body">
-                        <h2><span>Titulo: </span>{{ $culturalWork->title }}</h2>
-                        @if ($culturalWork->author)
-                            <h4><span>Autor: </span> {{ $culturalWork->author->name }}</h4>
-                        @else
-                            <h4><span>Autor: </span> No tiene</h4>
-                        @endif
-                        <div class="d-flex">
-                            <div class="stars">
-                                <span>1</span>
-                                <span>2</span>
-                                <span>3</span>
-                                <span>4</span>
-                                <span>5</span>
+                @if ($loop->first)
+                    <div class="col-12 col-md-6 my-3">
+                        <div class="card my-card-hover" title="{{ $culturalWork->title }}">
+                            <div class="d-flex">
+                                <div class="col-6">
+                                    <img src="{{ Storage::url($culturalWork->image) }}" alt="Imagen de {{ $culturalWork->title }}">
+                                </div>
+                                <div class="card-body col-6 d-flex flex-column">
+                                    <div class="my-title-container">
+                                        <h2 class="my-title mx-auto">{{ $culturalWork->title }}</h2>
+                                    </div>
+                                    @if ($culturalWork->author)
+                                        <h4 class="my-author"><span>Autor: </span> {{ $culturalWork->author->name }}</h4>
+                                    @else
+                                        <h4 class="my-author"><span>Autor: </span> No tiene</h4>
+                                    @endif
+                                    <p class="align-self-start">{{ $culturalWork->review }}</p>
+                                    <div class="d-flex mx-auto">
+                                        <div class="d-flex mx-3">
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                            <i class="fas fa-star text-warning"></i>
+                                        </div>
+                                        <a href="{{ route('home.show', $culturalWork) }}" class="my-btn mx-3">Ver más</a>
+                                    </div>
+                                </div>
                             </div>
-                            <a href="#" class="my-btn">Ver más</a>
                         </div>
                     </div>
-                </div>
+
+                @else
+                    <div class="col-12 col-md-3 my-3">
+                        <div class="card my-card-hover" title="{{ $culturalWork->title }}">
+                            @if ($culturalWork->image)
+                                <div class="card-image">
+                                    <img src="{{ Storage::url($culturalWork->image) }}" alt="Imagen de {{ $culturalWork->title }}">
+                                </div>
+                            @endif
+                            <div class="card-body d-flex flex-column">
+                                <div class="my-title-container">
+                                    <h2 class="my-title">{{ $culturalWork->title }}</h2>
+                                </div>
+                                @if ($culturalWork->author)
+                                    <h4 class="my-author"><span>Autor: </span> {{ $culturalWork->author->name }}</h4>
+                                @else
+                                    <h4 class="my-author"><span>Autor: </span> No tiene</h4>
+                                @endif
+                                <div class="d-flex justify-content-between mt-auto">
+                                    <div class="d-flex">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                    <a href="{{ route('home.show', $culturalWork) }}" class="my-btn">Ver más</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
             @endforeach
         </div>
     </div>
     {{-- Fin cards --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

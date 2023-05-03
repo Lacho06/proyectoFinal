@@ -11,9 +11,8 @@ class HomeController extends Controller
         return view('index', compact('culturalWorks'));
     }
 
-
-    // TODO: vista detalle de una obra
     public function show(CulturalWork $culturalWork){
-
+        // $culturalWork = CulturalWork::find($id);
+        return view('show', compact('culturalWork'));
     }
 }
