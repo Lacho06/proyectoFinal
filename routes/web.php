@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('cultural-work/{cultural_work}', [HomeController::class, 'show'])->name('home.show');
+
 Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth', 'menu.admin'])->names('restorationPlan');
 
 Route::resource('admin/author', AuthorController::class)->middleware(['auth', 'menu.admin'])->names('author');
