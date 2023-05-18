@@ -51,14 +51,24 @@ class CulturalWorkController extends Controller
     }
 
     public function update(CulturalWorkRequest $request, CulturalWork $culturalWork){
-
-        if($request->hasFile('image')){
-            if($culturalWork->image){
-                Storage::delete($culturalWork->image);
+        // valido si la obra tiene imagen
+        if($culturalWork->image){
+            // valido si en la peticion hay imagen
+            if($request->hasFile('image')){
+                if($culturalWork->image){
+                    Storage::delete($culturalWork->image);
+                }
+                $url = Storage::put('images', $request->image);
+            }else{
+                $url = $culturalWork->image;
             }
-            $url = Storage::put('images', $request->image);
         }else{
-            $url = null;
+            // si la obra no tiene imagen y en la peticion hay imagen
+            if($request->hasFile('image')){
+                $url = Storage::put('images', $request->image);
+            }else{
+                $url = null;
+            }
         }
         $culturalWork->updateCulturalWork($request, $url);
 

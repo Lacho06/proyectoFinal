@@ -22,7 +22,6 @@ class Score extends Model
         return $this->belongsTo(CulturalWork::class);
     }
 
-
     public static function avgScoreCulturalWork(CulturalWork $culturalWork){
         return DB::select('Select AVG(amount) as amount FROM scores WHERE cultural_work_id = '.$culturalWork->id);
     }

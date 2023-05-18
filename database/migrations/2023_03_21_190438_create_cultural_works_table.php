@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('review');
             $table->string('state_of_disrepair');
             $table->string('budget');
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedBigInteger('restoration_plan_id')->nullable();
             $table->foreign('author_id')->references('id')->on('authors')->onUpdate('cascade')->onDelete('cascade');

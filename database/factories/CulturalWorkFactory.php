@@ -23,7 +23,8 @@ class CulturalWorkFactory extends Factory
             'location' => $this->faker->sentence(),
             'review' => $this->faker->paragraph(),
             'state_of_disrepair' => $this->faker->randomElement(['óptimo','regular','deteriorado']),
-            'budget' => $this->faker->randomFloat()
+            'budget' => $this->faker->randomFloat(),
+            'image' => null,
         ];
     }
 }

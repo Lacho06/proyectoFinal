@@ -16,6 +16,29 @@
             font-family: 'Open Sans';
         }
 
+        li{
+            list-style: none;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        a:hover{
+            color:white;
+        }
+
+        .migas-de-pan{
+            text-decoration: none;
+            color: black;
+        }
+
+        .migas-de-pan:hover{
+            text-decoration: initial;
+            color: #202A62;
+            font-weight: bold;
+        }
+
         @font-face{
             font-family: 'Open Sans'
             src: {{ asset('fonts/Open_Sans/OpenSans-Regular.ttf') }}
@@ -36,12 +59,6 @@
         .my-btn:hover{
             transform: scale(.9);
             transition: transform ease .4s;
-        }
-        a{
-            text-decoration: none;
-        }
-        a:hover{
-            color:white;
         }
 
         .my-card{
@@ -88,6 +105,7 @@
 
         .my-login{
             transform: scale(1);
+            border: none;
         }
 
         .my-login:hover{
@@ -120,8 +138,10 @@
         <h2 class="my-auto text-white">Patrimonio Cultural</h2>
         <div class="d-flex justify-content-end">
             @auth
-                {{-- Arreglar el cerrar sesion  --}}
-                <a href="{{ route('logout') }}" class="btn btn-danger mx-2 my-auto">Cerrar sesión</a>
+                <form action="{{ route('logout') }}" class="d-flex my-auto" method="POST">
+                    @csrf
+                    <input type="submit" class="text-white my-login bg-blue mx-2 my-auto" value="Cerrar sesión" />
+                </form>
             @endauth
             @guest
                 <a href="{{ route('login') }}" class="text-white my-login mx-2 my-auto">Iniciar sesión</a>
@@ -130,14 +150,23 @@
     </nav>
     {{-- Fin navbar --}}
 
-    <div class="row">
-        <div class="col-12">
-            <img src="{{ Storage::url($culturalWork->image) }}" alt="{{ $culturalWork->title }}">
-        </div>
-    </div>
-
 
     <div class="container mx-auto d-flex flex-column">
+        <div class="row">
+            <div class="col-10 mx-auto d-flex justify-content-center">
+                <img src="{{ Storage::url($culturalWork->image) }}" alt="{{ $culturalWork->title }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 mx-auto">
+                <ul class="d-flex">
+                    <li><a href="{{ route('home') }}" class="migas-de-pan">Inicio</a></li>
+                    <span class="mx-2">/</span>
+                    <li><a href="{{ route('home.show', $culturalWork) }}" class="migas-de-pan">{{ $culturalWork->title }}</a></li>
+                </ul>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-6 mx-auto">
                 <div class="d-flex justify-content-between">
@@ -163,9 +192,11 @@
 
         <div class="row">
             <div class="col-6 mx-auto">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex">
                     <h2>Reseña:</h2>
-                    <p>{{ $culturalWork->review }}</p>
+                    <div class="mx-4 d-flex" style="flex-grow: 1;">
+                        <p class="my-auto">{{ $culturalWork->review }}</p>
+                    </div>
                 </div>
             </div>
         </div>

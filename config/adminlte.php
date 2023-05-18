@@ -323,25 +323,25 @@ return [
             'text' => 'Usuarios',
             'route'  => 'user.index',
             'icon' => 'fas fa-fw fa-user',
-            'role' => 'administrador',
+            'can' => 'administrador'
         ],
         [
             'text' => 'Obras',
             'route'  => 'culturalWork.index',
             'icon' => 'fas fa-fw fa-lock',
-            'role' => 'vicerector',
+            'can' => 'vicerector o asistente'
         ],
         [
             'text' => 'Autores',
             'route'  => 'author.index',
             'icon' => 'fas fa-fw fa-lock',
-            'role' => 'vicerector',
+            'can' => 'vicerector o asistente'
         ],
         [
             'text' => 'Planes de Restauración',
             'route'  => 'restorationPlan.index',
             'icon' => 'fas fa-fw fa-lock',
-            'role' => 'vicerector',
+            'can' => 'vicerector o asistente'
         ],
         // [
         //     'text'    => 'multilevel',
