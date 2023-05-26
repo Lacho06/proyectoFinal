@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // TODO: pendiente el desplegable con los roles para el usuario
     public function index(){
         $users = User::all();
         return view('user.index', compact('users'));

@@ -14,7 +14,7 @@
             <div class="col-12 card m-0 py-3 px-5">
                 <div class="card-body">
                     <div class="d-flex mt-3 mb-auto">
-                        <img class="rounded-circle border border-dark" width="80" height="80" src="{{ asset('src/icons/user.png') }}" alt="">
+                        <img class="rounded-circle border border-dark" width="80" height="80" src="{{ asset('src/icons/plan.png') }}" alt="">
                         <div class="d-flex w-100 justify-content-around ml-2">
                             <div class="d-flex flex-column my-auto">
                                 <div class="d-flex my-1 w-100">

@@ -7,7 +7,6 @@ use App\Models\Author;
 use App\Models\CulturalWork;
 use App\Models\Score;
 use App\Notifications\CulturalWorkRestored;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +15,6 @@ class CulturalWorkController extends Controller
 {
     public function index(){
         $culturalWorks = CulturalWork::all();
-
         return view('culturalWork.index', compact('culturalWorks'));
     }
 

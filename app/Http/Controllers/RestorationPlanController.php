@@ -7,6 +7,8 @@ use App\Models\CulturalWork;
 use App\Models\RestorationPlan;
 use Illuminate\Support\Facades\Session;
 use App\Notifications\PlanCreated;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
 class RestorationPlanController extends Controller
@@ -17,10 +19,10 @@ class RestorationPlanController extends Controller
     }
     // TODO: solo enviar a la vista las obras asociadas al plan
     public function create(){
-        $culturalWorks = CulturalWork::paginate(3);
-        return view('restorationPlan.create', compact('culturalWorks'));
+        $culturalWorks = CulturalWork::all();
+        $culturalWorksAssociated = [];
+        return view('restorationPlan.create', compact('culturalWorks', 'culturalWorksAssociated'));
     }
-    // TODO: agregar la logica de agregar obra a plan
     public function store(PlanRequest $request){
         $plan = RestorationPlan::savePlan($request);
         // TODO: arreglar la notificacion
@@ -35,10 +37,29 @@ class RestorationPlanController extends Controller
         $plan = RestorationPlan::find($id);
         return view('restorationPlan.show', compact('plan'));
     }
+    // TODO pendiente terminar este metodo
+    public function associateCulturalWork(Request $request){
+        $request->validate([
+            'culturalWork_id' => 'required|exists:culturalWorks,id',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'restore_permission' => 'required',
+        ]);
+
+        $start_date = Carbon::parse($request->start_date);
+        $end_date = Carbon::parse($request->end_date);
+
+        if($start_date->isBefore($end_date)){
+            $culturalWork = CulturalWork::find($request->culturalWork_id);
+        }
+
+        return redirect()->route('restorationPlan.create');
+    }
 
     public function edit($id){
         $plan = RestorationPlan::find($id);
-        return view('restorationPlan.edit', compact('plan'));
+        $culturalWorks = CulturalWork::where('restoration_plan_id', $plan->id)->first();
+        return view('restorationPlan.edit', compact('plan', 'culturalWorks'));
     }
 
     public function update(PlanRequest $request, RestorationPlan $plan){

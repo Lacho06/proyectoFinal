@@ -12,6 +12,13 @@ class RestorationPlan extends Model
 
     protected $fillable = ['year', 'annual_budget', 'approval'];
 
+    // relaciones
+
+    public function culturalWorks(){
+        return $this->belongsToMany(CulturalWork::class);
+    }
+
+    // metodos
 
     public static function savePlan($data){
         if($data->approval){

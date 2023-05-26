@@ -18,9 +18,24 @@ class CulturalWork extends Model
         'state_of_disrepair',
         'budget',
         'image',
-        'author_id',
-        'restoration_plan_id'
+        'author_id'
     ];
+
+    // relaciones
+
+    public function plans(){
+        return $this->belongsToMany(RestorationPlan::class);
+    }
+
+    public function author(){
+        return $this->belongsTo(Author::class);
+    }
+
+    public function score(){
+        return $this->hasMany(Score::class);
+    }
+
+    // metodos
 
     public static function saveCulturalWork($data, $url){
         $culturalWork = CulturalWork::create([
@@ -54,11 +69,4 @@ class CulturalWork extends Model
         ]);
     }
 
-    public function author(){
-        return $this->belongsTo(Author::class);
-    }
-
-    public function score(){
-        return $this->hasMany(Score::class);
-    }
 }
