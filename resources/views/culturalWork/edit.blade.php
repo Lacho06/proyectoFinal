@@ -52,9 +52,9 @@
                                                 </div>
                                             </x-slot>
                                             <option default value="Seleccione una opción">Seleccione una opción</option>
-                                            <option value="autor">autor</option>
-                                            <option value="universidad">universidad</option>
-                                            <option value="no">no</option>
+                                            <option value="autor" @selected($culturalWork->restore_permission == 'autor')>autor</option>
+                                            <option value="universidad" @selected($culturalWork->restore_permission == 'universidad')>universidad</option>
+                                            <option value="no" @selected($culturalWork->restore_permission == 'no')>no</option>
                                         </x-adminlte-select2>
                                     </div>
                                 </div>
@@ -68,9 +68,9 @@
                                                 </div>
                                             </x-slot>
                                             <option default value="Seleccione una opción">Seleccione una opción</option>
-                                            <option value="óptimo">óptimo</option>
-                                            <option value="regular">regular</option>
-                                            <option value="deteriorado">deteriorado</option>
+                                            <option value="óptimo" @selected($culturalWork->state_of_disrepair == 'óptimo')>óptimo</option>
+                                            <option value="regular" @selected($culturalWork->state_of_disrepair == 'regular')>regular</option>
+                                            <option value="deteriorado" @selected($culturalWork->state_of_disrepair == 'deteriorado')>deteriorado</option>
                                         </x-adminlte-select2>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
@@ -84,8 +84,8 @@
                                             <option default value="Seleccione una opción">Seleccione una opción</option>
                                             @forelse ($authors as $author)
                                                 <option value="{{ $author->id }}"
-                                                    @if ($culturalWork->author->id == $author->id)
-                                                        checked
+                                                    @if ($culturalWork->author)
+                                                        @selected($culturalWork->author->id == $author->id)
                                                     @endif
                                                 >{{ $author->name }}</option>
                                             @empty
@@ -97,7 +97,8 @@
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4 w-100">
                                         <x-adminlte-textarea name="review" label="Reseña" rows=8 igroup-size="sm"
-                                            label-class="text-primary" value="{{ old('review', $culturalWork->review) }}" placeholder="Reseña..." disable-feedback>
+                                            label-class="text-primary" placeholder="Reseña..." disable-feedback>
+                                            {{ old('review', $culturalWork->review) }}
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-align-justify text-lightblue"></i>
@@ -110,8 +111,10 @@
                                     <div class="d-flex flex-column">
                                         <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image', $culturalWork->image) }}" disable-feedback></x-adminlte-input-file>
                                         <div style="width: 100%; aspect-ratio: 1/1; display: flex; border: 1px solid rgba(128, 128, 128, .5); z-index: 5;">
-                                            <img class="image-container" src="{{ Storage::url($culturalWork->image) }}" alt="">
-                                            <span class="m-auto text-secondary px-5">No hay ninguna imagen seleccionada</span>
+                                            <img class="image-container" width="360" height="360" style="aspect-ratio: 2/2;" src="{{ Storage::url($culturalWork->image) }}" alt="">
+                                            @if (!$culturalWork->image)
+                                                <span class="m-auto text-secondary px-5">No hay ninguna imagen seleccionada</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column mx-4">

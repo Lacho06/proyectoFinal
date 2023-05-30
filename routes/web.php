@@ -14,14 +14,20 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('cultural-work/{cultural_work}', [HomeController::class, 'show'])->name('home.show');
 
-Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth', 'menu.admin'])->names('restorationPlan');
+Route::post('admin/plan/associate-cultural-work', [RestorationPlanController::class, 'associateCulturalWork'])->name('restorationPlan.associateCulturalWork');
 
-Route::resource('admin/author', AuthorController::class)->middleware(['auth', 'menu.admin'])->names('author');
+Route::post('admin/plan/unassociate-cultural-work', [RestorationPlanController::class, 'unassociateCulturalWork'])->name('restorationPlan.unassociateCulturalWork');
 
-Route::resource('admin/cultural-work', CulturalWorkController::class)->middleware(['auth', 'menu.admin'])->names('culturalWork');
+Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth'])->names('restorationPlan');
 
-Route::resource('admin/user', UserController::class)->middleware(['auth', 'menu.admin'])->names('user');
+Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth'])->names('restorationPlan');
 
-Route::resource('admin', AdminController::class)->only(['index'])->middleware(['auth', 'menu.admin'])->names('admin');
+Route::resource('admin/author', AuthorController::class)->middleware(['auth'])->names('author');
+
+Route::resource('admin/cultural-work', CulturalWorkController::class)->middleware(['auth'])->names('culturalWork');
+
+Route::resource('admin/user', UserController::class)->middleware(['auth'])->names('user');
+
+Route::resource('admin', AdminController::class)->only(['index'])->middleware(['auth'])->names('admin');
 
 Auth::routes();

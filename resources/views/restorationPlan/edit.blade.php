@@ -15,7 +15,7 @@
                             <div class="d-flex flex-column col-12">
                                 <div class="d-flex col-12 mx-auto justify-content-center mb-4">
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input name="year" label="Año" placeholder="Año..." value="{{ old('year') }}" label-class="text-lightblue">
+                                        <x-adminlte-input name="year" label="Año" placeholder="Año..." value="{{ old('year', $plan->year) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-user text-lightblue"></i>
@@ -24,7 +24,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input name="annual_budget" label="Presupuesto anual" placeholder="Presupuesto anual..." value="{{ old('annual_budget') }}" label-class="text-lightblue">
+                                        <x-adminlte-input name="annual_budget" label="Presupuesto anual" placeholder="Presupuesto anual..." value="{{ old('annual_budget', $plan->annual_budget) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-dollar-sign text-lightblue"></i>
@@ -46,14 +46,52 @@
                                     <div class="card col-12">
                                         <div class="card-header d-flex py-2">
                                             <h3 class="ml-3">Obras vinculadas</h3>
-                                            <button type="submit" class="btn btn-xs btn-success text-white ml-auto mr-2 p-2 shadow" title="Enviar">
+                                            <button type="button" data-toggle="modal" data-target="#addModal" class="btn btn-xs btn-success text-white ml-auto mr-2 p-2 shadow" title="Agregar obra">
                                                 <i class="fa fa-arrow-circle-right fa-lg"></i>
                                                 <span>Agregar obra</span>
                                             </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Agregar obra a plan</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="" method="POST">
+                                                            @csrf
+                                                            <x-adminlte-select2 name="culturalWork_id" label="Nombre de la obra" data-placeholder="Nombre de la obra..." value="{{ old('culturalWork_id') }}" label-class="text-lightblue"
+                                                                igroup-size="md">
+                                                                <option default value="" disabled>Obra, autor</option>
+                                                                @forelse ($culturalWorks as $culturalWork)
+                                                                    <option value="{{ $culturalWork->id }}"><span>Obra: </span>{{ $culturalWork->title }},<span>Autor: </span> {{ $culturalWork->author->name }}</option>
+                                                                @empty
+                                                                    <option value="" disabled>No hay obras para mostrar</option>
+                                                                @endforelse
+                                                            </x-adminlte-select2>
+                                                            <x-adminlte-input type="date" min="{{ date('Y-m-d') }}" name="end_date" label="Fecha inicial" placeholder="Fecha inicial..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
+                                                            <x-adminlte-input type="date" min="{{ date('Y-m-d') }}" name="end_date" label="Fecha final" placeholder="Fecha final..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
+                                                            <div class="d-flex">
+                                                                <x-adminlte-input-switch name="restore_permission" data-on-text="Si" data-off-text="No"
+                                                                data-on-color="teal" class="my-auto" />
+                                                                <span class="mx-2">Participa el autor</span>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify bordered>
-                                                {{-- @foreach($culturalWorks as $culturalWork)
+                                                @forelse($plan->culturalWorks as $culturalWork)
                                                     <tr>
                                                         <td>{{ $culturalWork->id }}</td>
                                                         <td>{{ $culturalWork->title }}</td>
@@ -77,7 +115,11 @@
                                                             </form>
                                                         </td>
                                                     </tr>
-                                                @endforeach --}}
+                                                @empty
+                                                    <tr>
+                                                        <td>No existen obras asociadas a este plan</td>
+                                                    </tr>
+                                                @endforelse
                                             </x-adminlte-datatable>
                                         </div>
                                     </div>
@@ -103,4 +145,7 @@
         </div>
     </div>
 
+@endsection
+@section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

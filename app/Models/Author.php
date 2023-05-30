@@ -9,28 +9,26 @@ class Author extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'lastname', 'email', 'phone', 'image'];
+    protected $fillable = ['name', 'lastname', 'email', 'phone'];
 
 
-    public static function saveAuthor($data, $url){
+    public static function saveAuthor($data){
         $author = Author::create([
             'name' => $data->name,
             'lastname' => $data->lastname,
             'email' => $data->email,
-            'phone' => $data->phone,
-            'image' => $url
+            'phone' => $data->phone
         ]);
 
         return $author;
     }
 
-    public function updateAuthor($data, $url){
+    public function updateAuthor($data){
         $this->update([
             'name' => $data->name,
             'lastname' => $data->lastname,
             'email' => $data->email,
-            'phone' => $data->phone,
-            'image' => $url
+            'phone' => $data->phone
         ]);
     }
 

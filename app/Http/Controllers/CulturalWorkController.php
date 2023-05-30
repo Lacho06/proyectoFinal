@@ -7,7 +7,6 @@ use App\Models\Author;
 use App\Models\CulturalWork;
 use App\Models\Score;
 use App\Notifications\CulturalWorkRestored;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +15,6 @@ class CulturalWorkController extends Controller
 {
     public function index(){
         $culturalWorks = CulturalWork::all();
-
         return view('culturalWork.index', compact('culturalWorks'));
     }
 
@@ -51,14 +49,24 @@ class CulturalWorkController extends Controller
     }
 
     public function update(CulturalWorkRequest $request, CulturalWork $culturalWork){
-
-        if($request->hasFile('image')){
-            if($culturalWork->image){
-                Storage::delete($culturalWork->image);
+        // valido si la obra tiene imagen
+        if($culturalWork->image){
+            // valido si en la peticion hay imagen
+            if($request->hasFile('image')){
+                if($culturalWork->image){
+                    Storage::delete($culturalWork->image);
+                }
+                $url = Storage::put('images', $request->image);
+            }else{
+                $url = $culturalWork->image;
             }
-            $url = Storage::put('images', $request->image);
         }else{
-            $url = null;
+            // si la obra no tiene imagen y en la peticion hay imagen
+            if($request->hasFile('image')){
+                $url = Storage::put('images', $request->image);
+            }else{
+                $url = null;
+            }
         }
         $culturalWork->updateCulturalWork($request, $url);
 

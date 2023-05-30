@@ -26,13 +26,7 @@ class AuthorController extends Controller
     }
 
     public function store(AuthorRequest $request){
-        if($request->hasFile('image')){
-            $url = Storage::put('images', $request->image);
-        }else{
-            $url = null;
-        }
-
-        $author = Author::saveAuthor($request, $url);
+        $author = Author::saveAuthor($request);
 
         $message = "Autor Creado";
         Session::flash('message', $message);
@@ -45,17 +39,7 @@ class AuthorController extends Controller
     }
 
     public function update(AuthorRequest $request, Author $author){
-        if($request->hasFile('image')){
-            if($author->image){
-                Storage::delete($author->image);
-            }
-            $url = Storage::put('images', $request->image);
-        }else{
-            $url = $author->image;
-        }
-
-        $author->updateAuthor($request, $url);
-
+        $author->updateAuthor($request);
 
         $message = "Autor Actualizado";
         Session::flash('message', $message);
@@ -64,9 +48,6 @@ class AuthorController extends Controller
     }
 
     public function destroy(Author $author){
-        if($author->image){
-            Storage::delete($author->image);
-        }
         $author->delete();
         return back();
     }

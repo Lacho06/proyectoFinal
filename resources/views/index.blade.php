@@ -88,6 +88,7 @@
 
         .my-login{
             transform: scale(1);
+            border: none;
         }
 
         .my-login:hover{
@@ -112,6 +113,38 @@
             outline: none;
         }
 
+        .my-card-container{
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes ocultar{
+            from{
+                transform: rotate(270deg) scale(.9) translateX(0);
+            }
+            to{
+                transform: rotate(270deg) scale(.9) translateX(100px);
+            }
+        }
+
+        .my-distintion{
+            position: absolute;
+            top: 20px;
+            right: -15px;
+            z-index: 1000;
+            box-shadow: 3px 5px 10px hsla(0, 20%, 20%, .2);
+            padding: 3px;
+            transform: rotate(270deg) scale(.9);
+            background: #FCFFA7;
+            border: 1px solid white;
+            border-radius: 15% 0 0 15% / 55% 0 0 55%;
+        }
+
+        .my-card-hover:hover .my-distintion{
+            animation-name: ocultar;
+            animation-duration: 3s;
+            animation-fill-mode: forwards;
+        }
     </style>
 </head>
 <body>
@@ -120,8 +153,10 @@
         <h2 class="my-auto text-white">Patrimonio Cultural</h2>
         <div class="d-flex justify-content-end">
             @auth
-                {{-- Arreglar el cerrar sesion  --}}
-                <a href="{{ route('logout') }}" class="btn btn-danger mx-2 my-auto">Cerrar sesión</a>
+                <form action="{{ route('logout') }}" class="d-flex my-auto" method="POST">
+                    @csrf
+                    <input type="submit" class="text-white my-login bg-blue mx-2 my-auto" value="Cerrar sesión" />
+                </form>
             @endauth
             @guest
                 <a href="{{ route('login') }}" class="text-white my-login mx-2 my-auto">Iniciar sesión</a>
@@ -153,20 +188,12 @@
                     <div class="col-12 col-md-6 my-3">
                         <div class="card my-card-hover" title="{{ $culturalWork->title }}">
                             <div class="d-flex">
-                                <div class="col-6">
-                                    <img src="{{ Storage::url($culturalWork->image) }}" alt="Imagen de {{ $culturalWork->title }}">
-                                </div>
-                                <div class="card-body col-6 d-flex flex-column">
-                                    <div class="my-title-container">
-                                        <h2 class="my-title mx-auto">{{ $culturalWork->title }}</h2>
-                                    </div>
-                                    @if ($culturalWork->author)
-                                        <h4 class="my-author"><span>Autor: </span> {{ $culturalWork->author->name }}</h4>
-                                    @else
-                                        <h4 class="my-author"><span>Autor: </span> No tiene</h4>
-                                    @endif
-                                    <p class="align-self-start">{{ $culturalWork->review }}</p>
-                                    <div class="d-flex mx-auto">
+                                @if ($culturalWork->image)
+                                    <img src="{{ Storage::url($culturalWork->image) }}" class="card-image col-6" alt="Imagen de {{ $culturalWork->title }}">
+                                @endif
+                                <div class="card-body col-6 d-flex flex-column my-card-container">
+                                    <div class="my-distintion d-flex flex-column align-items-center">
+                                        <span>Más Popular</span>
                                         <div class="d-flex mx-3">
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
@@ -174,6 +201,17 @@
                                             <i class="fas fa-star text-warning"></i>
                                             <i class="fas fa-star text-warning"></i>
                                         </div>
+                                    </div>
+                                    <div class="my-title-container">
+                                        <h2 class="my-title">{{ $culturalWork->title }}</h2>
+                                    </div>
+                                    @if ($culturalWork->author)
+                                        <h4 class="my-author"><span>Autor: </span> {{ $culturalWork->author->name }}</h4>
+                                    @else
+                                        <h4 class="my-author"><span>Autor: </span> No tiene</h4>
+                                    @endif
+                                    <p class="align-self-start mt-5">{{ $culturalWork->review }}</p>
+                                    <div class="d-flex mx-auto mt-auto">
                                         <a href="{{ route('home.show', $culturalWork) }}" class="my-btn mx-3">Ver más</a>
                                     </div>
                                 </div>
@@ -185,9 +223,7 @@
                     <div class="col-12 col-md-3 my-3">
                         <div class="card my-card-hover" title="{{ $culturalWork->title }}">
                             @if ($culturalWork->image)
-                                <div class="card-image">
-                                    <img src="{{ Storage::url($culturalWork->image) }}" alt="Imagen de {{ $culturalWork->title }}">
-                                </div>
+                                <img src="{{ Storage::url($culturalWork->image) }}" class="card-image" alt="Imagen de {{ $culturalWork->title }}">
                             @endif
                             <div class="card-body d-flex flex-column">
                                 <div class="my-title-container">

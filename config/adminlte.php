@@ -322,26 +322,26 @@ return [
         [
             'text' => 'Usuarios',
             'route'  => 'user.index',
-            'icon' => 'fas fa-fw fa-user',
-            'role' => 'administrador',
+            'icon' => 'fa fa-user',
+            'can' => 'administrador'
         ],
         [
             'text' => 'Obras',
             'route'  => 'culturalWork.index',
-            'icon' => 'fas fa-fw fa-lock',
-            'role' => 'vicerector',
+            'icon' => 'fa fa-university',
+            'can' => 'vicerector o asistente'
         ],
         [
             'text' => 'Autores',
             'route'  => 'author.index',
-            'icon' => 'fas fa-fw fa-lock',
-            'role' => 'vicerector',
+            'icon' => 'fas fa-user-tie',
+            'can' => 'vicerector o asistente'
         ],
         [
             'text' => 'Planes de Restauración',
             'route'  => 'restorationPlan.index',
-            'icon' => 'fas fa-fw fa-lock',
-            'role' => 'vicerector',
+            'icon' => 'fas fa-calendar-check',
+            'can' => 'vicerector o asistente'
         ],
         // [
         //     'text'    => 'multilevel',
@@ -451,6 +451,16 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'BootstrapSwitch' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bootstrap-switch/js/bootstrap-switch.min.js',
                 ],
             ],
         ],
