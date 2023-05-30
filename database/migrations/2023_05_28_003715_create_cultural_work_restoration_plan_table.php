@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cultural_works_restoration_plans', function (Blueprint $table) {
+        Schema::create('cultural_work_restoration_plan', function (Blueprint $table) {
             $table->id();
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cultural_works_restoration_plans');
+        Schema::dropIfExists('cultural_work_restoration_plan');
     }
 };

@@ -16,6 +16,10 @@ Route::get('cultural-work/{cultural_work}', [HomeController::class, 'show'])->na
 
 Route::post('admin/plan/associate-cultural-work', [RestorationPlanController::class, 'associateCulturalWork'])->name('restorationPlan.associateCulturalWork');
 
+Route::post('admin/plan/unassociate-cultural-work', [RestorationPlanController::class, 'unassociateCulturalWork'])->name('restorationPlan.unassociateCulturalWork');
+
+Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth'])->names('restorationPlan');
+
 Route::resource('admin/restoration-plan', RestorationPlanController::class)->middleware(['auth'])->names('restorationPlan');
 
 Route::resource('admin/author', AuthorController::class)->middleware(['auth'])->names('author');

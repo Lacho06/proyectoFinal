@@ -33,7 +33,7 @@ class UserRequest extends FormRequest
             'image' => 'nullable|image',
             'role' => 'nullable'
         ];
-
+        // TODO pendiente la regla de validacion del correo
         if($this->method('PUT')){
             return [
                 'name' => 'required',

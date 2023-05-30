@@ -53,11 +53,6 @@
                                         </x-adminlte-input>
                                     </div>
                                 </div>
-                                <div class="d-flex mx-4 my-1">
-                                    <div class="d-flex flex-column">
-                                        <x-adminlte-input-file name="image" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}" disable-feedback></x-adminlte-input-file>
-                                    </div>
-                                </div>
                                 <div class="d-flex justify-content-between mx-4 my-3">
                                     <div class="d-flex flex-column my-1 ml-auto">
                                         <button type="submit" class="btn btn-xs btn-warning text-white py-2 px-3 shadow" title="Editar">

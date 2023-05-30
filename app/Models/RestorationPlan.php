@@ -21,7 +21,7 @@ class RestorationPlan extends Model
     // metodos
 
     public static function savePlan($data){
-        if($data->approval){
+        if($data->approval || $data->approval == true){
             $approval = 1;
         }else{
             $approval = 0;

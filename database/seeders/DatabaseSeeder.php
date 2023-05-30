@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
+        User::create([
             'name' => 'David',
             'lastname' => 'Rodriguez',
             'solapin' => 'E322786',
@@ -30,13 +30,24 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(20)->create();
-        Author::factory(10)->create();
-        RestorationPlan::factory(10)->create();
-        for($i = 1; $i <= 10; $i++){
-            CulturalWork::factory(10)->create([
-                'author_id' => $i,
-                'restoration_plan_id' => $i
-            ]);
+
+        for($i = 0; $i < 10; $i++){
+            $plan = RestorationPlan::factory(1)->create();
+            for($j = 0; $j < rand(2, 5); $j++){
+                $authorData = Author::factory(1)->create();
+                $author = Author::find($authorData->pluck('id')->toArray())->first();
+
+                $culturalWorkData = CulturalWork::factory(1)->create([
+                    'author_id' => $author->id
+                ]);
+
+                $culturalWork = CulturalWork::find($culturalWorkData->pluck('id')->toArray())->first();
+
+                $culturalWork->plans()->attach($plan->pluck('id')->toArray(), [
+                    'start_date' => null,
+                    'end_date' => null,
+                ]);
+            }
         }
     }
 }

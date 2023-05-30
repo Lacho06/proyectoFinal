@@ -64,7 +64,7 @@
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label for="remember">
-                        Recuerdame
+                        Recuérdame
                     </label>
                 </div>
             </div>
