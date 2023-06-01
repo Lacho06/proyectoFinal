@@ -33,6 +33,7 @@
                         </p>
                         {{-- TODO: pendiente agregar la puntuacion --}}
                         <p>Popularidad media: <span>puntuacion</span></p>
+                        <p>Presupuesto: <span>{{ $culturalWork->budget }}</span></p>
                     </div>
                     <div class="d-flex flex-column">
                         <p>Año de instauración: <span>{{ $culturalWork->year_of_stablishment }}</span></p>
@@ -40,13 +41,13 @@
                         <p>Estado de deterioro: <span>{{ $culturalWork->state_of_disrepair }}</span></p>
                     </div>
                 </div>
-                <div class="d-flex justify-content-around mx-3">
+                {{-- <div class="d-flex justify-content-around mx-3">
                     <table class="table table-bordered mx-5">
                         <tr>
                             <th>Restauraciones pasadas</th>
                         </tr>
                         <tr>
-                            {{-- TODO: falta llenar las tablas --}}
+
                         </tr>
                     </table>
                     <table class="table table-bordered mx-5">
@@ -57,6 +58,13 @@
 
                         </tr>
                     </table>
+                </div> --}}
+                <div class="d-flex my-1">
+                    <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                        <a href="{{ route('culturalWork.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                            <span>Atrás</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class RestorationPlan extends Model
     // relaciones
 
     public function culturalWorks(){
-        return $this->belongsToMany(CulturalWork::class);
+        return $this->belongsToMany(CulturalWork::class)->withPivot('start_date', 'end_date');
     }
 
     // metodos
@@ -34,5 +34,40 @@ class RestorationPlan extends Model
         ]);
 
         return $plan;
+    }
+
+    public function updatePlan($data){
+        if($data->year){
+            $this->update([
+                'year' => $data->year
+            ]);
+        }
+        if($data->annual_budget){
+            $this->update([
+                'annual_budget' => $data->annual_budget
+            ]);
+        }
+        if($data->approval){
+            $this->update([
+                'approval' => $data->approval
+            ]);
+        }
+    }
+
+    public static function generateReport(){
+        $report = [];
+        $plans = RestorationPlan::with('culturalWorks')->where('approval', '=', true)->orderBy('year', 'desc')->get();
+        foreach($plans as $plan){
+            $sumBudget = 0;
+            foreach($plan->culturalWorks as $culturalWork){
+                $sumBudget += $culturalWork->budget;
+            }
+            array_push($report, [
+                'plan' => $plan,
+                'sum_budget' => $sumBudget,
+                'budget_remaining' => $plan->annual_budget - $sumBudget
+            ]);
+        }
+        return $report;
     }
 }

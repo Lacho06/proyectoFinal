@@ -24,7 +24,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input name="lastname" label="Apellido" placeholder="Apellido..." value="{{ old('lastname') }}" label-class="text-lightblue">
+                                        <x-adminlte-input name="lastname" label="Apellidos" placeholder="Apellidos..." value="{{ old('lastname') }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-user text-lightblue"></i>
@@ -44,7 +44,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input type="number" name="phone" label="Teléfono" placeholder="Teléfono..." value="{{ old('phone') }}" label-class="text-lightblue">
+                                        <x-adminlte-input type="text" name="phone" label="Teléfono" placeholder="Teléfono..." value="{{ old('phone') }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-phone text-lightblue"></i>
@@ -53,8 +53,13 @@
                                         </x-adminlte-input>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between mx-4 my-3">
-                                    <div class="d-flex flex-column my-1 ml-auto">
+                                <div class="d-flex my-1">
+                                    <div class="d-flex flex-column ml-auto mr-2">
+                                        <a href="{{ route('author.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                            <span>Atrás</span>
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-column">
                                         <button type="submit" class="btn btn-xs btn-success text-white py-2 px-3 shadow" title="Enviar">
                                             <i class="fa fa-arrow-circle-right fa-lg"></i>
                                             <span>Enviar</span>

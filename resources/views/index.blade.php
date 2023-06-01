@@ -173,8 +173,11 @@
         <div class="col-3 my-4 mx-auto">
             <div class="card">
                 <div class="d-flex justify-content-between align-items-center py-2 px-4">
-                    <i class="fa fa-search my-search-icon"></i>
-                    <input type="search" name="search" class="my-search">
+                    <form action="{{ route('home.search') }}" method="post" class="form-search">
+                        @csrf
+                        <i class="fa fa-search my-search-icon" onclick="handleClick()"></i>
+                        <input type="search" name="search" class="my-search">
+                    </form>
                 </div>
             </div>
         </div>
@@ -218,7 +221,6 @@
                             </div>
                         </div>
                     </div>
-
                 @else
                     <div class="col-12 col-md-3 my-3">
                         <div class="card my-card-hover" title="{{ $culturalWork->title }}">
@@ -248,7 +250,6 @@
                         </div>
                     </div>
                 @endif
-
             @endforeach
         </div>
     </div>
@@ -256,5 +257,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const btn = document.querySelector('i.my-search-icon')
+        const form = document.querySelector('.form-search')
+
+        const handleClick = () => {
+            form.submit()
+        }
+    </script>
 </body>
 </html>

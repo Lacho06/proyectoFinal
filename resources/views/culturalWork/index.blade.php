@@ -15,7 +15,7 @@
         ];
     @endphp
     <div class="d-flex mb-4">
-        <a href="{{ route('culturalWork.create') }}" class="ml-auto">
+        <a href="{{ route('culturalWork.generateReport') }}" class="ml-auto">
             <button class="btn btn-xs text-white py-2 px-3 mx-1 shadow" style="background-color: #202A62;" title="Generar reporte">
                 <span>Generar reporte</span>
             </button>
@@ -23,7 +23,7 @@
         <a href="{{ route('culturalWork.create') }}">
             <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
                 <i class="fa fa-plus"></i>
-                <span>Agregar</span>
+                <span>Crear</span>
             </button>
         </a>
     </div>

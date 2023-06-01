@@ -63,14 +63,7 @@
                                             </x-slot>
                                         </x-adminlte-input>
                                     </div>
-                                </div>
-                                <div class="d-flex mx-4 my-1">
-                                    <div class="d-flex flex-column">
-                                        <x-adminlte-input-file name="image" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image', $user->image) }}" disable-feedback></x-adminlte-input-file>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between mx-4 my-3">
-                                    <div class="d-flex flex-column mb-auto">
+                                    <div class="d-flex flex-column my-1 mx-4">
                                         <x-adminlte-select2 name="role" label="Rol" data-placeholder="Rol..." value="{{ old('role', $user->role) }}" label-class="text-lightblue"
                                             igroup-size="md">
                                             <x-slot name="prependSlot">
@@ -80,14 +73,22 @@
                                             </x-slot>
                                             <option default value="Seleccione una opción">Seleccione una opción</option>
                                             <option value="administrador">Administrador</option>
-                                            <option value="vicerector">Vicerector</option>
-                                            <option value="asistente">Asistente del vicerector</option>
+                                            <option value="vicerector">Vicerrector</option>
+                                            <option value="asistente">Asistente del vicerrector</option>
+                                            <option value="comunidad universitaria">Comunidad universitaria</option>
                                         </x-adminlte-select2>
                                     </div>
-                                    <div class="d-flex flex-column my-1">
+                                </div>
+                                <div class="d-flex my-1">
+                                    <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                                        <a href="{{ route('user.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                            <span>Atrás</span>
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-column mt-4 mx-2">
                                         <button type="submit" class="btn btn-xs btn-warning text-white py-2 px-3 shadow" title="Editar">
                                             <i class="fa fa-arrow-circle-right fa-lg"></i>
-                                            <span>Editar</span>
+                                            <span>Actualizar</span>
                                         </button>
                                     </div>
                                 </div>

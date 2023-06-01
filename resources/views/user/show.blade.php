@@ -63,6 +63,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex my-1">
+                        <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                            <a href="{{ route('user.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                <span>Atrás</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

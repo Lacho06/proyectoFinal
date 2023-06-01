@@ -24,7 +24,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input name="lastname" label="Apellido" placeholder="Apellido..." value="{{ old('lastname') }}" label-class="text-lightblue">
+                                        <x-adminlte-input name="lastname" label="Apellidos" placeholder="Apellidos..." value="{{ old('lastname') }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-user text-lightblue"></i>
@@ -73,11 +73,6 @@
                                         </x-adminlte-input>
                                     </div>
                                 </div>
-                                <div class="d-flex mx-4 my-1">
-                                    <div class="d-flex flex-column">
-                                        <x-adminlte-input-file name="image" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}" disable-feedback></x-adminlte-input-file>
-                                    </div>
-                                </div>
                                 <div class="d-flex justify-content-between mx-4 my-3">
                                     <div class="d-flex flex-column mb-auto">
                                         <x-adminlte-select2 name="role" label="Rol" data-placeholder="Rol..." value="{{ old('role') }}" label-class="text-lightblue"
@@ -89,15 +84,23 @@
                                             </x-slot>
                                             <option default value="Seleccione una opción">Seleccione una opción</option>
                                             <option value="administrador">Administrador</option>
-                                            <option value="vicerector">Vicerector</option>
-                                            <option value="asistente">Asistente del vicerector</option>
+                                            <option value="vicerector">Vicerrector</option>
+                                            <option value="asistente">Asistente del vicerrector</option>
+                                            <option value="comunidad universitaria">Comunidad universitaria</option>
                                         </x-adminlte-select2>
                                     </div>
-                                    <div class="d-flex flex-column my-1">
-                                        <button type="submit" class="btn btn-xs btn-success text-white py-2 px-3 shadow" title="Enviar">
-                                            <i class="fa fa-arrow-circle-right fa-lg"></i>
-                                            <span>Enviar</span>
-                                        </button>
+                                    <div class="d-flex my-1">
+                                        <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                                            <a href="{{ route('user.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                                <span>Atrás</span>
+                                            </a>
+                                        </div>
+                                        <div class="d-flex flex-column mt-4 mx-2">
+                                            <button type="submit" class="btn btn-xs btn-success text-white py-2 px-3 shadow" title="Enviar">
+                                                <i class="fa fa-arrow-circle-right fa-lg"></i>
+                                                <span>Enviar</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

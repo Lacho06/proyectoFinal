@@ -98,12 +98,12 @@
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <div class="d-flex flex-column mt-4 mx-2">
-                                        <button class="btn btn-xs btn-primary text-white py-2 px-3 shadow" title="Generar plan">
+                                        <a href="{{ route('restorationPlan.generatePlan', $plan->id) }}" class="btn btn-xs btn-primary text-white py-2 px-3 shadow" title="Generar plan">
                                             <span>Generar plan</span>
-                                        </button>
+                                        </a>
                                     </div>
                                     <div class="d-flex flex-column mt-4 mx-2">
-                                        <a href="{{ route('restorationPlan.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                        <a href="{{ route('restorationPlan.show', $plan->id) }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
                                             <span>Finalizar</span>
                                         </a>
                                     </div>
@@ -119,27 +119,6 @@
 @endsection
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        const handleQuit = () => {
-            Swal.fire({
-                title: '¿Estás seguro que deseas desvincular esta obra del plan?',
-                text: "No puedes revertir esta acción",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, acepto'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit()
-                    Swal.fire(
-                        'Eliminado',
-                        'Esta obra ha sido desvinculada del plan.'
-                    )
-                }
-            })
-        }
-    </script>
     <script>
         const message = document.querySelectorAll('.message')
         if(message[0].innerText !== null){

@@ -26,7 +26,7 @@
                                 <div class="d-flex my-1 w-100">
                                     <h3 class="my-auto mx-3">Presupuesto:</h3>
                                     <div class="border d-flex border-dark flex-wrap my-2 ml-auto" style="min-width: 250px !important; aspect-ratio: 5/1 !important; border-radius: 5px !important;">
-                                        <p class="m-auto">{{ $plan->annual_budget }}</p>
+                                        <p class="m-auto">{{ $plan->annual_budget }} CUP</p>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,6 @@
                             'Fecha final',
                             'Estado'
                         ];
-
                     @endphp
                     <div class="card col-12 mt-5">
                         <div class="card-header d-flex py-2">
@@ -49,18 +48,36 @@
                         </div>
                         <div class="card-body pt-3">
                             <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify bordered>
-                                {{-- @foreach($culturalWorks as $culturalWork)
+                                @foreach($plan->culturalWorks as $culturalWork)
                                     <tr>
-                                        <td>{{ $culturalWork->id }}</td>
                                         <td>{{ $culturalWork->title }}</td>
                                         @if ($culturalWork->author)
                                             <td>{{ $culturalWork->author->name }}</td>
                                         @else
                                             <td>No tiene</td>
                                         @endif
+                                        <td>{{ $culturalWork->budget }} CUP</td>
+                                        @if ($culturalWork->pivot->start_date)
+                                            <td>{{ $culturalWork->pivot->start_date }}</td>
+                                        @else
+                                            <td>No tiene</td>
+                                        @endif
+                                        @if ($culturalWork->pivot->end_date)
+                                            <td>{{ $culturalWork->pivot->end_date }}</td>
+                                        @else
+                                            <td>No tiene</td>
+                                        @endif
+                                        <td>{{ $culturalWork->state_of_disrepair }}</td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </x-adminlte-datatable>
+                        </div>
+                    </div>
+                    <div class="d-flex my-1">
+                        <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                            <a href="{{ route('restorationPlan.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                <span>Atrás</span>
+                            </a>
                         </div>
                     </div>
                 </div>

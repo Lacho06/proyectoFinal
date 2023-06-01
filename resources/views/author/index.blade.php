@@ -9,7 +9,7 @@
         $heads = [
             ['label' => 'ID', 'width' => 10],
             ['label' => 'Nombre', 'width' => 20],
-            ['label' => 'Apellido', 'width' => 20],
+            ['label' => 'Apellidos', 'width' => 20],
             ['label' => 'Correo', 'width' => 20],
             ['label' => 'Acciones', 'no-export' => true, 'width' => 20],
         ];
@@ -18,7 +18,7 @@
         <a href="{{ route('author.create') }}" class="ml-auto">
             <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
                 <i class="fa fa-plus"></i>
-                <span>Agregar</span>
+                <span>Crear</span>
             </button>
         </a>
     </div>

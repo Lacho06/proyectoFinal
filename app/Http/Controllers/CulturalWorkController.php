@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\CulturalWork;
 use App\Models\Score;
 use App\Notifications\CulturalWorkRestored;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -35,6 +36,17 @@ class CulturalWorkController extends Controller
         Session::flash('message', $message);
 
         return redirect()->route('culturalWork.show', $culturalWork);
+    }
+
+    public function generateReport(){
+        $report = CulturalWork::generateReport();
+        return view('culturalWork.report', compact('report'));
+    }
+
+    public function downloadReport(){
+        $report = CulturalWork::generateReport();
+        $pdf = Pdf::loadView('culturalWork.downloadReport', compact('report'));
+        return $pdf->download('culturalWork-report.pdf');
     }
 
     public function show(CulturalWork $culturalWork){
