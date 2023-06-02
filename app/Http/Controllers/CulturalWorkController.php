@@ -16,6 +16,7 @@ class CulturalWorkController extends Controller
 {
     public function index(){
         $culturalWorks = CulturalWork::all();
+        Session::forget('message');
         return view('culturalWork.index', compact('culturalWorks'));
     }
 
@@ -31,7 +32,7 @@ class CulturalWorkController extends Controller
             $url = null;
         }
         $culturalWork = CulturalWork::saveCulturalWork($request, $url);
-
+        Session::forget('message');
         $message = "Obra Creada";
         Session::flash('message', $message);
 
@@ -81,7 +82,7 @@ class CulturalWorkController extends Controller
             }
         }
         $culturalWork->updateCulturalWork($request, $url);
-
+        Session::forget('message');
         $message = "Obra Actualizada";
         Session::flash('message', $message);
 

@@ -16,6 +16,7 @@ class RestorationPlanController extends Controller
 {
     public function index(){
         $plans = RestorationPlan::all();
+        Session::forget('message');
         return view('restorationPlan.index', compact('plans'));
     }
 
@@ -27,6 +28,7 @@ class RestorationPlanController extends Controller
         $plan = RestorationPlan::savePlan($request);
         // TODO: arreglar la notificacion
         Notification::send($plan, new PlanCreated(['year' => $plan->year]));
+        Session::forget('message');
         $message = "Plan de restauración creado";
         Session::flash('message', $message);
         $culturalWorks = CulturalWork::whereNotIn('id', function ($query) use ($plan) {
@@ -54,9 +56,13 @@ class RestorationPlanController extends Controller
                     'start_date' => Carbon::now(),
                     'end_date' => Carbon::tomorrow()
                 ]);
+                $totalBudget -= $cwAdded->budget;
             }
             $count++;
-        }while($totalBudget > $cwAdded->budget && $count < 3);
+        }while($totalBudget > $cwAdded->budget && $count < 5);
+        Session::forget('message');
+        $message = "Plan de restauración generado satisfactoriamente";
+        Session::flash('message', $message);
         $culturalWorks = CulturalWork::whereNotIn('id', function ($query) use ($plan) {
             $query->select('cultural_work_id')->from('cultural_work_restoration_plan')->where('cultural_work_restoration_plan.restoration_plan_id', $plan->id);
         })->get();
@@ -94,6 +100,8 @@ class RestorationPlanController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date'
         ]);
+
+        Session::forget('message');
 
         $start_date = Carbon::parse($request->start_date);
         $end_date = Carbon::parse($request->end_date);
@@ -135,6 +143,7 @@ class RestorationPlanController extends Controller
 
     public function update(PlanRequest $request, $id){
         $plan = RestorationPlan::find($id);
+        Session::forget('message');
         if($request->year != $plan->year){
             $message = "Error, ya existe un plan con ese año";
             Session::flash('message', $message);
