@@ -15,17 +15,26 @@
         ];
     @endphp
     <div class="d-flex mb-4">
-        <a href="{{ route('culturalWork.generateReport') }}" class="ml-auto">
-            <button class="btn btn-xs text-white py-2 px-3 mx-1 shadow" style="background-color: #202A62;" title="Generar reporte">
-                <span>Generar reporte</span>
-            </button>
-        </a>
-        <a href="{{ route('culturalWork.create') }}">
-            <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
-                <i class="fa fa-plus"></i>
-                <span>Crear</span>
-            </button>
-        </a>
+        @if (auth()->user()->role == "vicerector")
+            <a href="{{ route('culturalWork.generateReport') }}" class="ml-auto">
+                <button class="btn btn-xs text-white py-2 px-3 mx-1 shadow" style="background-color: #202A62;" title="Generar reporte">
+                    <span>Generar reporte</span>
+                </button>
+            </a>
+            <a href="{{ route('culturalWork.create') }}">
+                <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
+                    <i class="fa fa-plus"></i>
+                    <span>Crear</span>
+                </button>
+            </a>
+        @else
+            <a href="{{ route('culturalWork.create') }}" class="ml-auto">
+                <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
+                    <i class="fa fa-plus"></i>
+                    <span>Crear</span>
+                </button>
+            </a>
+        @endif
     </div>
     <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify>
         @forelse($culturalWorks as $culturalWork)
@@ -80,7 +89,8 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, acepto'
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, acepto'
                     }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit()

@@ -25,13 +25,13 @@ class CulturalWorkRequest extends FormRequest
     {
         $rules = [
             'title' => 'required',
-            'year_of_stablishment' => 'required|numeric',
+            'year_of_stablishment' => 'required|numeric|digits:4|min:0',
             'location' => 'required',
             'restore_permission' => 'required',
             'state_of_disrepair' => 'required',
             'author_id' => 'required',
             'review' => 'required',
-            'budget' => 'required',
+            'budget' => 'required|min:1',
             'image' => 'nullable|image'
         ];
 

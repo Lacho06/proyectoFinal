@@ -16,20 +16,35 @@
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto">
-        <a href="#" class="nav-link" data-toggle="dropdown">
-            <i class="fas fa-bell"></i>
-            <span class="badge badge-pill badge-danger">{{ auth()->user()->notifications->count() }}</span>
-        </a>
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <i class="fa fa-bell"></i>
+                <span class="badge badge-light bg-success badge-xs">{{auth()->user()->unreadNotifications->count()}}</span>
+            </a>
+            <div class="dropdown-menu">
+                <h6 class="dropdown-header">Notificaciones</h6>
+                <div class="dropdown-divider"></div>
+                <ul>
+                    @if (auth()->user()->unreadNotifications)
+                        <li class="d-flex justify-content-end mx-1 my-2">
+                            <a href="{{route('mark-as-read')}}" class="btn btn-success btn-sm">Mark All as Read</a>
+                        </li>
+                    @endif
+                    @foreach (auth()->user()->unreadNotifications as $notification)
+                        <a href="#" class="text-success"><li class="p-1 text-success"> {{$notification->data['data']}}</li></a>
+                    @endforeach
+                    @foreach (auth()->user()->readNotifications as $notification)
+                        <a href="#" class="text-secondary"><li class="p-1 text-secondary"> {{$notification->data['data']}}</li></a>
+                    @endforeach
+                </ul>
+            </div>
+        </li>
+        {{-- TODO me quede por aqui --}}
         <div class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i> <span>{{ auth()->user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                <h6 class="dropdown-header">Notificaciones</h6>
-                @foreach(auth()->user()->notifications as $notification)
-                    <a class="dropdown-item" href="#">{{ $notification->data['message'] }}</a>
-                @endforeach
-                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Configuración</a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Salir

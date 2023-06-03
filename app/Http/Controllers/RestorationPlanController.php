@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PlanRequest;
 use App\Models\CulturalWork;
 use App\Models\RestorationPlan;
+use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use App\Notifications\PlanCreated;
 use Carbon\Carbon;
@@ -26,8 +27,8 @@ class RestorationPlanController extends Controller
 
     public function store(PlanRequest $request){
         $plan = RestorationPlan::savePlan($request);
-        // TODO: arreglar la notificacion
-        Notification::send($plan, new PlanCreated(['year' => $plan->year]));
+        $users = User::where('role', 'vicerector')->get();
+        Notification::send($users, new PlanCreated(['year' => $plan->year]));
         Session::forget('message');
         $message = "Plan de restauración creado";
         Session::flash('message', $message);
@@ -41,6 +42,10 @@ class RestorationPlanController extends Controller
         $plan = RestorationPlan::find($id);
         $totalBudget = $plan->annual_budget;
         $count = 0;
+
+        foreach($plan->culturalWorks as $culturalWorkA){
+            $totalBudget -= $culturalWorkA->budget;
+        }
         do{
             $cwAdded = CulturalWork::select('id', 'budget')
             ->where('budget', '<', $totalBudget)
@@ -51,7 +56,9 @@ class RestorationPlanController extends Controller
             })
             ->orderBy('state_of_disrepair', 'asc')
             ->orderBy('budget', 'asc')->first();
+            $budget = 0;
             if($cwAdded){
+                $budget = $cwAdded->budget;
                 $plan->culturalWorks()->attach($cwAdded->id, [
                     'start_date' => Carbon::now(),
                     'end_date' => Carbon::tomorrow()
@@ -59,7 +66,7 @@ class RestorationPlanController extends Controller
                 $totalBudget -= $cwAdded->budget;
             }
             $count++;
-        }while($totalBudget > $cwAdded->budget && $count < 5);
+        }while($totalBudget > $budget && $count < 5);
         Session::forget('message');
         $message = "Plan de restauración generado satisfactoriamente";
         Session::flash('message', $message);
@@ -109,7 +116,7 @@ class RestorationPlanController extends Controller
         $culturalWork = CulturalWork::find($request->culturalWork_id);
         $plan = RestorationPlan::find($request->restorationPlan_id);
 
-        if($start_date->isBefore($end_date)){
+        if($start_date->isBefore($end_date) || $start_date->isSameDay($end_date)){
             $plan->culturalWorks()->attach($culturalWork->id, [
                 'start_date' => $start_date,
                 'end_date' => $end_date
@@ -133,7 +140,7 @@ class RestorationPlanController extends Controller
         ]);
         $culturalWork = CulturalWork::find($request->culturalWork_id);
         $plan = RestorationPlan::find($request->restorationPlan_id);
-
+        Session::forget('message');
         $plan->culturalWorks()->detach($culturalWork->id);
         $culturalWorks = CulturalWork::whereNotIn('id', function ($query) use ($plan) {
             $query->select('cultural_work_id')->from('cultural_work_restoration_plan')->where('cultural_work_restoration_plan.restoration_plan_id', $plan->id);

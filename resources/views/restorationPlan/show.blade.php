@@ -34,12 +34,11 @@
                     </div>
                     @php
                         $heads = [
-                            'Nombre',
+                            'Título',
                             'Autor',
                             'Presupuesto',
                             'Fecha inicial',
-                            'Fecha final',
-                            'Estado'
+                            'Fecha final'
                         ];
                     @endphp
                     <div class="card col-12 mt-5">
@@ -67,7 +66,6 @@
                                         @else
                                             <td>No tiene</td>
                                         @endif
-                                        <td>{{ $culturalWork->state_of_disrepair }}</td>
                                     </tr>
                                 @endforeach
                             </x-adminlte-datatable>
@@ -96,7 +94,7 @@
                 icon: 'success',
                 title: message[0].innerText,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             })
         }
     </script>

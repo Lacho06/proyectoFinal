@@ -65,7 +65,7 @@
                 icon: 'success',
                 title: message[0].innerText,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             })
         }
     </script>

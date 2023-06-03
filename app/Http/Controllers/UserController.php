@@ -25,10 +25,9 @@ class UserController extends Controller
         }else{
             $url = null;
         }
-
         $user = User::saveUser($request, $url);
         Session::forget('message');
-        $message = "Usuario Creado";
+        $message = "Usuario creado";
         Session::flash('message', $message);
 
         return redirect()->route('user.show', $user);
@@ -54,7 +53,7 @@ class UserController extends Controller
 
         $user->updateUser($request, $url);
         Session::forget('message');
-        $message = "Usuario Actualizado";
+        $message = "Usuario actualizado";
         Session::flash('message', $message);
 
         return redirect()->route('user.show', $user);

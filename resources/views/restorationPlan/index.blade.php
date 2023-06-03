@@ -15,17 +15,26 @@
         ];
     @endphp
     <div class="d-flex mb-4">
-        <a href="{{ route('restorationPlan.generateReport') }}" class="ml-auto">
-            <button class="btn btn-xs text-white py-2 px-3 mx-1 shadow" style="background-color: #202A62;" title="Generar reporte">
-                <span>Generar reporte</span>
-            </button>
-        </a>
-        <a href="{{ route('restorationPlan.create') }}">
+        @if (auth()->user()->role == "vicerector")
+            <a href="{{ route('restorationPlan.generateReport') }}" class="ml-auto">
+                <button class="btn btn-xs text-white py-2 px-3 mx-1 shadow" style="background-color: #202A62;" title="Generar reporte">
+                    <span>Generar reporte</span>
+                </button>
+            </a>
+            <a href="{{ route('restorationPlan.create') }}">
+                <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
+                    <i class="fa fa-plus"></i>
+                    <span>Crear</span>
+                </button>
+            </a>
+        @else
+        <a href="{{ route('restorationPlan.create') }}" class="ml-auto">
             <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
                 <i class="fa fa-plus"></i>
                 <span>Crear</span>
             </button>
         </a>
+        @endif
     </div>
     <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify>
         @forelse($plans as $plan)
@@ -86,7 +95,8 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, acepto'
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, acepto'
                     }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit()

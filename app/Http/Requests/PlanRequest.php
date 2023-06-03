@@ -23,16 +23,16 @@ class PlanRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->method('PUT')){
+        if($this->isMethod('PUT')){
             $rules = [
-                'year' => 'required|unique:restoration_plans,year|numeric',
-                'annual_budget' => 'required|numeric',
+                'year' => 'required|unique:restoration_plans,year|numeric|digits:4|min:0',
+                'annual_budget' => 'required|numeric|min:1',
                 'approval' => 'nullable',
             ];
         }else{
             $rules = [
-                'year' => 'required|numeric',
-                'annual_budget' => 'required|numeric',
+                'year' => 'required|numeric|digits:4|min:0',
+                'annual_budget' => 'required|numeric|min:1',
                 'approval' => 'nullable',
             ];
         }

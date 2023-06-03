@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content_header')
-    <h2>Crear Usuario</h2>
+    <h2>Crear usuario</h2>
     <div class="mb-3"></div>
 @endsection
 @section('content')
@@ -75,19 +75,22 @@
                                 </div>
                                 <div class="d-flex justify-content-between mx-4 my-3">
                                     <div class="d-flex flex-column mb-auto">
-                                        <x-adminlte-select2 name="role" label="Rol" data-placeholder="Rol..." value="{{ old('role') }}" label-class="text-lightblue"
+                                        <x-adminlte-select2 required name="role" label="Rol" data-placeholder="Rol..." value="{{ old('role') }}" label-class="text-lightblue"
                                             igroup-size="md">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="far fa-chart-bar text-lightblue"></i>
                                                 </div>
                                             </x-slot>
-                                            <option default value="Seleccione una opción">Seleccione una opción</option>
+                                            {{-- <option>Seleccione una opción</option> --}}
+                                            <option default value="comunidad universitaria">Comunidad universitaria</option>
                                             <option value="administrador">Administrador</option>
                                             <option value="vicerector">Vicerrector</option>
                                             <option value="asistente">Asistente del vicerrector</option>
-                                            <option value="comunidad universitaria">Comunidad universitaria</option>
                                         </x-adminlte-select2>
+                                        @error('role')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                     <div class="d-flex my-1">
                                         <div class="d-flex flex-column mt-4 ml-auto mr-2">

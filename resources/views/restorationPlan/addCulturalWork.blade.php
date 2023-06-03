@@ -30,7 +30,7 @@
                                             'ID',
                                             'Obra',
                                             ['label' => 'Autor', 'width' => 40],
-                                            ['label' => 'Acciones', 'no-export' => true, 'width' => 5],
+                                            ['label' => 'Acción', 'no-export' => true, 'width' => 5],
                                         ];
                                     @endphp
 
@@ -127,7 +127,7 @@
                 icon: 'success',
                 title: message[0].innerText,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             })
         }
     </script>

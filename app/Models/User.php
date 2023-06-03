@@ -49,6 +49,12 @@ class User extends Authenticatable
     ];
 
     public static function saveUser($data, $url){
+        $roles = ['administrador', 'vicerector', 'asistente', 'comunidad universitaria'];
+        if(in_array($data->role, $roles)){
+            $rol = $data->role;
+        }else{
+            $rol = 'comunidad universitaria';
+        }
         $user = User::create([
             'name' => $data->name,
             'lastname' => $data->lastname,
@@ -57,13 +63,25 @@ class User extends Authenticatable
             'phone' => $data->phone,
             'solapin' => $data->solapin,
             'image' => $url,
-            'role' => $data->role,
+            'role' => $rol,
         ]);
 
         return $user;
     }
 
     public function updateUser($data, $url){
+        $roles = ['administrador', 'vicerector', 'asistente', 'comunidad universitaria'];
+        if(in_array($data->role, $roles)){
+            $rol = $data->role;
+        }else{
+            $rol = 'comunidad universitaria';
+        }
+        if($data->password){
+            $this->update([
+                'password' => Hash::make($data->password)
+            ]);
+        }
+
         $this->update([
             'name' => $data->name,
             'lastname' => $data->lastname,
@@ -71,7 +89,7 @@ class User extends Authenticatable
             'phone' => $data->phone,
             'solapin' => $data->solapin,
             'image' => $url,
-            'role' => $data->role,
+            'role' => $rol,
         ]);
 
     }

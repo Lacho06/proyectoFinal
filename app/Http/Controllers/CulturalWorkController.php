@@ -6,6 +6,7 @@ use App\Http\Requests\CulturalWorkRequest;
 use App\Models\Author;
 use App\Models\CulturalWork;
 use App\Models\Score;
+use App\Models\User;
 use App\Notifications\CulturalWorkRestored;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Notification;
@@ -86,9 +87,9 @@ class CulturalWorkController extends Controller
         $message = "Obra Actualizada";
         Session::flash('message', $message);
 
-
-        if($request->state_of_disrepair == "Restaurada"){
-            Notification::send($culturalWork, new CulturalWorkRestored(['name' => $culturalWork->name]));
+        if($request->state_of_disrepair == "Restaurada" && $culturalWork->state_of_disrepair !== $request->state_of_disrepair){
+            $users = User::where('role', 'vicerector')->get();
+            Notification::send($users, new CulturalWorkRestored(['name' => $culturalWork->name]));
         }
 
         return redirect()->route('culturalWork.show', $culturalWork);
