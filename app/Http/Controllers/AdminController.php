@@ -17,8 +17,14 @@ class AdminController extends Controller
         }
     }
 
-    public function markAsRead(){
+    public function markAllAsRead(){
         Auth::user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
+
+    public function markAsRead($id){
+        $notification = Auth::user()->notifications()->findOrFail($id);
+        $notification->markAsRead();
         return redirect()->back();
     }
 }

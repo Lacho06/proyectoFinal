@@ -92,7 +92,7 @@
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4 w-100">
                                         <x-adminlte-textarea name="review" label="Reseña" rows=8 igroup-size="sm"
-                                            label-class="text-primary" value="{{ old('review') }}" placeholder="Reseña..." disable-feedback>
+                                            label-class="text-primary" value="{{ old('review') }}" placeholder="Reseña...">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-align-justify text-lightblue"></i>
@@ -105,11 +105,11 @@
                                     <div class="d-flex flex-column mx-4 w-100">
                                         <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image') }}"></x-adminlte-input-file>
                                         <div style="aspect-ratio: 1/1; display: flex; border: 1px solid rgba(128, 128, 128, .5); z-index: 5;">
-                                            <img class="image-container" style="aspect-ratio: 1/1; max-width: 300px; max-height: 300px;" alt="No hay ninguna imagen seleccionada">
+                                            <img class="image-container" src="{{ old('image') }}" style="aspect-ratio: 1/1; max-width: 300px; max-height: 300px;" alt="No hay ninguna imagen seleccionada">
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column mx-4 w-100">
-                                        <x-adminlte-input type="number" name="budget" label="Presupuesto" placeholder="Presupuesto..." value="{{ old('budget') }}" label-class="text-lightblue">
+                                        <x-adminlte-input type="text" name="budget" label="Presupuesto" placeholder="Presupuesto..." value="{{ old('budget') }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fas fa-dollar-sign text-lightblue"></i>

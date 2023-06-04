@@ -32,9 +32,10 @@
                                             ['label' => 'Autor', 'width' => 40],
                                             ['label' => 'Acción', 'no-export' => true, 'width' => 5],
                                         ];
+                                        $config["lengthMenu"] = [ 5, 10, 20, 50];
                                     @endphp
 
-                                    <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify bordered>
+                                    <x-adminlte-datatable id="table1" :config="$config" :heads="$heads" striped hoverable beautify bordered>
                                         @foreach($plan->culturalWorks as $culturalWork)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>

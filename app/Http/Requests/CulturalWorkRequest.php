@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueAuthorByTitle;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CulturalWorkRequest extends FormRequest
@@ -24,15 +25,15 @@ class CulturalWorkRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'title' => 'required',
+            'title' => 'required|string|regex:/^[\p{L}\p{M} ]+$/u',
             'year_of_stablishment' => 'required|numeric|digits:4|min:0',
             'location' => 'required',
             'restore_permission' => 'required',
             'state_of_disrepair' => 'required',
-            'author_id' => 'required',
+            'author_id' => ['required'],
             'review' => 'required',
-            'budget' => 'required|min:1',
-            'image' => 'nullable|image'
+            'budget' => 'required|numeric|min:1',
+            'image' => 'required|image'
         ];
 
         return $rules;

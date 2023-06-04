@@ -13,6 +13,7 @@
             ['label' => 'Año', 'width' => 20],
             ['label' => 'Acciones', 'no-export' => true, 'width' => 20],
         ];
+        $config["lengthMenu"] = [ 5, 10, 20, 50];
     @endphp
     <div class="d-flex mb-4">
         @if (auth()->user()->role == "vicerector")
@@ -36,7 +37,7 @@
             </a>
         @endif
     </div>
-    <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify>
+    <x-adminlte-datatable id="table1" :config="$config" :heads="$heads" striped hoverable beautify>
         @forelse($culturalWorks as $culturalWork)
             <tr>
                 <td>{{ $culturalWork->id }}</td>
@@ -95,8 +96,7 @@
                     if (result.isConfirmed) {
                         form.submit()
                         Swal.fire(
-                        'Eliminado',
-                        'Esta obra ha sido eliminada.'
+                            'Obra eliminada.'
                         )
                     }
                 })

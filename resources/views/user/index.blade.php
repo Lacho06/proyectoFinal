@@ -13,6 +13,7 @@
             ['label' => 'Solapin', 'width' => 20],
             ['label' => 'Acciones', 'no-export' => true, 'width' => 20],
         ];
+        $config["lengthMenu"] = [ 5, 10, 20, 50];
     @endphp
     <div class="d-flex mb-4">
         <a href="{{ route('user.create') }}" class="ml-auto">
@@ -22,7 +23,7 @@
             </button>
         </a>
     </div>
-    <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify>
+    <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" striped hoverable beautify>
         @forelse($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
@@ -81,8 +82,7 @@
                     if (result.isConfirmed) {
                         form.submit()
                         Swal.fire(
-                        'Eliminado',
-                        'Este usuario ha sido eliminado.'
+                            'Usuario eliminado.'
                         )
                     }
                 })

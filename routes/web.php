@@ -18,7 +18,9 @@ Route::get('/search', function(){
 
 Route::post('/search', [HomeController::class, 'search'])->name('home.search');
 
-Route::get('/mark-as-read', [AdminController::class,'markAsRead'])->name('mark-as-read');
+Route::get('/mark-as-read/{notification}', [AdminController::class,'markAsRead'])->name('mark-as-read');
+
+Route::get('/mark-all-as-read', [AdminController::class,'markAllAsRead'])->name('mark-all-as-read');
 
 Route::get('cultural-work/{cultural_work}', [HomeController::class, 'show'])->name('home.show');
 

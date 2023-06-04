@@ -34,7 +34,7 @@ class CulturalWorkController extends Controller
         }
         $culturalWork = CulturalWork::saveCulturalWork($request, $url);
         Session::forget('message');
-        $message = "Obra Creada";
+        $message = "Obra creada";
         Session::flash('message', $message);
 
         return redirect()->route('culturalWork.show', $culturalWork);
@@ -84,7 +84,7 @@ class CulturalWorkController extends Controller
         }
         $culturalWork->updateCulturalWork($request, $url);
         Session::forget('message');
-        $message = "Obra Actualizada";
+        $message = "Obra actualizada";
         Session::flash('message', $message);
 
         if($request->state_of_disrepair == "Restaurada" && $culturalWork->state_of_disrepair !== $request->state_of_disrepair){
