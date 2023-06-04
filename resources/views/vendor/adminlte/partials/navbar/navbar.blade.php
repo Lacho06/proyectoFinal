@@ -14,10 +14,6 @@
         @yield('content_top_nav_left')
     </ul>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto w-100">
         <li class="dropdown">
