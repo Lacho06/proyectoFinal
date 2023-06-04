@@ -74,6 +74,7 @@
         .my-card-hover{
             text-align: center;
             transform: scale(1);
+            height: 360px;
             border: 1px solid gray;
         }
         .my-card-hover:hover{
@@ -145,12 +146,21 @@
             animation-duration: 3s;
             animation-fill-mode: forwards;
         }
+        h2 a{
+            text-decoration: none;
+        }
+        h2 a:hover{
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
     {{-- navbar --}}
     <nav class="d-flex p-2 mb-3 justify-content-between bg-blue">
-        <h2 class="my-auto text-white">Patrimonio Cultural</h2>
+        <h2>
+            <a href="{{ route('home') }}" class="my-auto text-white">Patrimonio Cultural</a>
+        </h2>
         <div class="d-flex justify-content-end">
             @auth
                 <form action="{{ route('logout') }}" class="d-flex my-auto" method="POST">
@@ -173,8 +183,11 @@
         <div class="col-3 my-4 mx-auto">
             <div class="card">
                 <div class="d-flex justify-content-between align-items-center py-2 px-4">
-                    <i class="fa fa-search my-search-icon"></i>
-                    <input type="search" name="search" class="my-search">
+                    <form action="{{ route('home.search') }}" method="post" class="form-search">
+                        @csrf
+                        <i class="fa fa-search my-search-icon" onclick="handleClick()"></i>
+                        <input type="search" name="search" class="my-search">
+                    </form>
                 </div>
             </div>
         </div>
@@ -187,9 +200,9 @@
                 @if ($loop->first)
                     <div class="col-12 col-md-6 my-3">
                         <div class="card my-card-hover" title="{{ $culturalWork->title }}">
-                            <div class="d-flex">
+                            <div class="d-flex h-100">
                                 @if ($culturalWork->image)
-                                    <img src="{{ Storage::url($culturalWork->image) }}" class="card-image col-6" alt="Imagen de {{ $culturalWork->title }}">
+                                    <img src="{{ Storage::url($culturalWork->image) }}" class="card-image col-6" height="100%" alt="Imagen de {{ $culturalWork->title }}">
                                 @endif
                                 <div class="card-body col-6 d-flex flex-column my-card-container">
                                     <div class="my-distintion d-flex flex-column align-items-center">
@@ -218,12 +231,11 @@
                             </div>
                         </div>
                     </div>
-
                 @else
                     <div class="col-12 col-md-3 my-3">
                         <div class="card my-card-hover" title="{{ $culturalWork->title }}">
                             @if ($culturalWork->image)
-                                <img src="{{ Storage::url($culturalWork->image) }}" class="card-image" alt="Imagen de {{ $culturalWork->title }}">
+                                <img src="{{ Storage::url($culturalWork->image) }}" class="card-image" height="55%" alt="Imagen de {{ $culturalWork->title }}">
                             @endif
                             <div class="card-body d-flex flex-column">
                                 <div class="my-title-container">
@@ -248,7 +260,6 @@
                         </div>
                     </div>
                 @endif
-
             @endforeach
         </div>
     </div>
@@ -256,5 +267,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const btn = document.querySelector('i.my-search-icon')
+        const form = document.querySelector('.form-search')
+
+        const handleClick = () => {
+            form.submit()
+        }
+    </script>
 </body>
 </html>

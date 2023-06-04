@@ -9,20 +9,21 @@
         $heads = [
             ['label' => 'ID', 'width' => 10],
             ['label' => 'Nombre', 'width' => 20],
-            ['label' => 'Apellido', 'width' => 20],
+            ['label' => 'Apellidos', 'width' => 20],
             ['label' => 'Solapin', 'width' => 20],
             ['label' => 'Acciones', 'no-export' => true, 'width' => 20],
         ];
+        $config["lengthMenu"] = [ 5, 10, 20, 50];
     @endphp
     <div class="d-flex mb-4">
         <a href="{{ route('user.create') }}" class="ml-auto">
             <button class="btn btn-xs btn-success text-white py-2 px-3 mx-1 shadow" title="Agregar">
                 <i class="fa fa-plus"></i>
-                <span>Agregar</span>
+                <span>Crear</span>
             </button>
         </a>
     </div>
-    <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify>
+    <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" striped hoverable beautify>
         @forelse($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
@@ -75,13 +76,13 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, acepto'
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, acepto'
                     }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit()
                         Swal.fire(
-                        'Eliminado',
-                        'Este usuario ha sido eliminado.'
+                            'Usuario eliminado.'
                         )
                     }
                 })

@@ -6,7 +6,9 @@ use App\Http\Requests\CulturalWorkRequest;
 use App\Models\Author;
 use App\Models\CulturalWork;
 use App\Models\Score;
+use App\Models\User;
 use App\Notifications\CulturalWorkRestored;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -15,6 +17,7 @@ class CulturalWorkController extends Controller
 {
     public function index(){
         $culturalWorks = CulturalWork::all();
+        Session::forget('message');
         return view('culturalWork.index', compact('culturalWorks'));
     }
 
@@ -30,11 +33,22 @@ class CulturalWorkController extends Controller
             $url = null;
         }
         $culturalWork = CulturalWork::saveCulturalWork($request, $url);
-
-        $message = "Obra Creada";
+        Session::forget('message');
+        $message = "Obra creada";
         Session::flash('message', $message);
 
         return redirect()->route('culturalWork.show', $culturalWork);
+    }
+
+    public function generateReport(){
+        $report = CulturalWork::generateReport();
+        return view('culturalWork.report', compact('report'));
+    }
+
+    public function downloadReport(){
+        $report = CulturalWork::generateReport();
+        $pdf = Pdf::loadView('culturalWork.downloadReport', compact('report'));
+        return $pdf->download('culturalWork-report.pdf');
     }
 
     public function show(CulturalWork $culturalWork){
@@ -69,13 +83,13 @@ class CulturalWorkController extends Controller
             }
         }
         $culturalWork->updateCulturalWork($request, $url);
-
-        $message = "Obra Actualizada";
+        Session::forget('message');
+        $message = "Obra actualizada";
         Session::flash('message', $message);
 
-
-        if($request->state_of_disrepair == "Restaurada"){
-            Notification::send($culturalWork, new CulturalWorkRestored(['name' => $culturalWork->name]));
+        if($request->state_of_disrepair == "Restaurada" && $culturalWork->state_of_disrepair !== $request->state_of_disrepair){
+            $users = User::where('role', 'vicerector')->get();
+            Notification::send($users, new CulturalWorkRestored(['name' => $culturalWork->name]));
         }
 
         return redirect()->route('culturalWork.show', $culturalWork);

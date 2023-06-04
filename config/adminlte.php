@@ -318,7 +318,7 @@ return [
         //     'label'       => 4,
         //     'label_color' => 'success',
         // ],
-        ['header' => 'Panel Administrativo'],
+        ['header' => 'Panel administrativo'],
         [
             'text' => 'Usuarios',
             'route'  => 'user.index',
@@ -338,7 +338,7 @@ return [
             'can' => 'vicerector o asistente'
         ],
         [
-            'text' => 'Planes de Restauración',
+            'text' => 'Planes de restauración',
             'route'  => 'restorationPlan.index',
             'icon' => 'fas fa-calendar-check',
             'can' => 'vicerector o asistente'
@@ -465,16 +465,16 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],

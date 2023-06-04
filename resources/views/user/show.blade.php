@@ -22,10 +22,13 @@
                                         <span class="text-center">Administrador</span>
                                     @endif
                                     @if ($user->role == 'vicerector')
-                                        <span class="text-center">Vicerector</span>
+                                        <span class="text-center">Vicerrector</span>
                                     @endif
                                     @if ($user->role == 'asistente')
                                         <span class="text-center">Asistente del vicerector</span>
+                                    @endif
+                                    @if ($user->role == 'comunidad universitaria')
+                                        <span class="text-center">Comunidad universitaria</span>
                                     @endif
                                 </p>
                             </div>
@@ -63,6 +66,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex my-1">
+                        <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                            <a href="{{ route('user.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                <span>Atrás</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,7 +89,7 @@
                 icon: 'success',
                 title: message[0].innerText,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             })
         }
     </script>

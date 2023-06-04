@@ -10,7 +10,7 @@
             <div class="col-12 card m-0 ml-3 mb-4 py-2">
                 <div class="card-body p-5">
                     <div class="d-flex justify-content-around">
-                        <form action="{{ route('restorationPlan.update', $plan) }}" enctype="multipart/form-data" method="POST" class="form">
+                        <form action="{{ route('restorationPlan.update', $plan->id) }}" enctype="multipart/form-data" method="POST" class="form">
                             @csrf @method('PUT')
                             <div class="d-flex flex-column col-12">
                                 <div class="d-flex col-12 mx-auto justify-content-center mb-4">
@@ -50,68 +50,26 @@
                                                 <i class="fa fa-arrow-circle-right fa-lg"></i>
                                                 <span>Agregar obra</span>
                                             </button>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Agregar obra a plan</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="" method="POST">
-                                                            @csrf
-                                                            <x-adminlte-select2 name="culturalWork_id" label="Nombre de la obra" data-placeholder="Nombre de la obra..." value="{{ old('culturalWork_id') }}" label-class="text-lightblue"
-                                                                igroup-size="md">
-                                                                <option default value="" disabled>Obra, autor</option>
-                                                                @forelse ($culturalWorks as $culturalWork)
-                                                                    <option value="{{ $culturalWork->id }}"><span>Obra: </span>{{ $culturalWork->title }},<span>Autor: </span> {{ $culturalWork->author->name }}</option>
-                                                                @empty
-                                                                    <option value="" disabled>No hay obras para mostrar</option>
-                                                                @endforelse
-                                                            </x-adminlte-select2>
-                                                            <x-adminlte-input type="date" min="{{ date('Y-m-d') }}" name="end_date" label="Fecha inicial" placeholder="Fecha inicial..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
-                                                            <x-adminlte-input type="date" min="{{ date('Y-m-d') }}" name="end_date" label="Fecha final" placeholder="Fecha final..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
-                                                            <div class="d-flex">
-                                                                <x-adminlte-input-switch name="restore_permission" data-on-text="Si" data-off-text="No"
-                                                                data-on-color="teal" class="my-auto" />
-                                                                <span class="mx-2">Participa el autor</span>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <x-adminlte-datatable id="table1" :heads="$heads" striped hoverable beautify bordered>
                                                 @forelse($plan->culturalWorks as $culturalWork)
                                                     <tr>
-                                                        <td>{{ $culturalWork->id }}</td>
+                                                        <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $culturalWork->title }}</td>
                                                         @if ($culturalWork->author)
                                                             <td>{{ $culturalWork->author->name }}</td>
                                                         @else
                                                             <td>No tiene</td>
                                                         @endif
-                                                        <td class="d-flex">
-                                                            <a href="">
-                                                                <button class="btn btn-xs btn-warning text-white py-1 mx-1 shadow" title="Editar">
-                                                                    <i class="fa fa-lg fa-fw fa-pen"></i>
+                                                        <td class="d-flex justify-content-center">
+                                                            <form action="{{ route('restorationPlan.unassociateCulturalWork') }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="culturalWork_id" value="{{ $culturalWork->id }}">
+                                                                <input type="hidden" name="restorationPlan_id" value="{{ $plan->id }}">
+                                                                <button type="submit" class="btn btn-xs btn-danger btn-delete text-white py-1 mx-1 shadow" title="Desvincular">
+                                                                    <i class="fa fa-lg fa-fw fa-trash"></i>
                                                                 </button>
-                                                            </a>
-                                                            <button class="btn btn-xs btn-danger btn-delete text-white py-1 mx-1 shadow" title="Eliminar">
-                                                                <i class="fa fa-lg fa-fw fa-trash"></i>
-                                                            </button>
-                                                            <form action="" class="d-none form-delete" method="post">
-                                                                @csrf @method("DELETE")
-                                                                <input type="submit" value="Send" class="d-none">
                                                             </form>
                                                         </td>
                                                     </tr>
@@ -135,6 +93,40 @@
                                             <i class="fa fa-arrow-circle-right fa-lg"></i>
                                             <span>Actualizar</span>
                                         </button>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Agregar obra a plan</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('restorationPlan.associateCulturalWork') }}" method="POST">
+                                                <div class="modal-body">
+                                                    @csrf
+                                                    <x-adminlte-select2 name="culturalWork_id" required label="Obra a vincular" data-placeholder="Obra a vincular..." value="{{ old('culturalWork_id') }}" label-class="text-lightblue"
+                                                        igroup-size="md">
+                                                        <option default value="" disabled>Obra, autor</option>
+                                                        @forelse ($culturalWorks as $cw)
+                                                            <option value="{{ $cw->id }}"><span>Obra: </span>{{ $cw->title }},<span>Autor: </span> {{ $cw->author->name }}</option>
+                                                        @empty
+                                                            <option value="" disabled>No hay obras para mostrar</option>
+                                                        @endforelse
+                                                    </x-adminlte-select2>
+                                                    <x-adminlte-input type="date" required min="{{ date('Y-m-d') }}" name="start_date" label="Fecha inicial" placeholder="Fecha inicial..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
+                                                    <x-adminlte-input type="date" required min="{{ date('Y-m-d') }}" name="end_date" label="Fecha final" placeholder="Fecha final..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
+                                                    <input type="hidden" name="restorationPlan_id" value="{{ $plan->id }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-success">Aceptar</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

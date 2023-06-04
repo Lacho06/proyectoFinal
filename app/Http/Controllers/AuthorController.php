@@ -13,7 +13,7 @@ class AuthorController extends Controller
     // TODO: boton pa dar atras en las pantallas
     public function index(){
         $authors = Author::all();
-
+        Session::forget('message');
         return view('author.index', compact('authors'));
     }
 
@@ -27,7 +27,7 @@ class AuthorController extends Controller
 
     public function store(AuthorRequest $request){
         $author = Author::saveAuthor($request);
-
+        Session::forget('message');
         $message = "Autor Creado";
         Session::flash('message', $message);
 
@@ -40,7 +40,7 @@ class AuthorController extends Controller
 
     public function update(AuthorRequest $request, Author $author){
         $author->updateAuthor($request);
-
+        Session::forget('message');
         $message = "Autor Actualizado";
         Session::flash('message', $message);
 

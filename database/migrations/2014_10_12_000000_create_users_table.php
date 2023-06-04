@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone');
-            $table->string('role')->default('comunidad_universitaria');
+            $table->string('role')->default('comunidad universitaria');
             $table->rememberToken();
             $table->timestamps();
         });

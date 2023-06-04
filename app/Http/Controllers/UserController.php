@@ -11,6 +11,7 @@ class UserController extends Controller
 {
     public function index(){
         $users = User::all();
+        Session::forget('message');
         return view('user.index', compact('users'));
     }
 
@@ -24,10 +25,9 @@ class UserController extends Controller
         }else{
             $url = null;
         }
-
         $user = User::saveUser($request, $url);
-
-        $message = "Usuario Creado";
+        Session::forget('message');
+        $message = "Usuario creado";
         Session::flash('message', $message);
 
         return redirect()->route('user.show', $user);
@@ -52,8 +52,8 @@ class UserController extends Controller
         }
 
         $user->updateUser($request, $url);
-
-        $message = "Usuario Actualizado";
+        Session::forget('message');
+        $message = "Usuario actualizado";
         Session::flash('message', $message);
 
         return redirect()->route('user.show', $user);

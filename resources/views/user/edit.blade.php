@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content_header')
-    <h2>Editar Usuario</h2>
+    <h2>Editar usuario</h2>
     <div class="mb-3"></div>
 @endsection
 @section('content')
@@ -44,7 +44,7 @@
                                         </x-adminlte-input>
                                     </div>
                                     <div class="d-flex flex-column my-1 mx-4">
-                                        <x-adminlte-input type="number" name="phone" label="Teléfono" placeholder="Teléfono..." value="{{ old('phone', $user->phone) }}" label-class="text-lightblue">
+                                        <x-adminlte-input type="text" name="phone" label="Teléfono" placeholder="Teléfono..." value="{{ old('phone', $user->phone) }}" label-class="text-lightblue">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-phone text-lightblue"></i>
@@ -63,31 +63,43 @@
                                             </x-slot>
                                         </x-adminlte-input>
                                     </div>
-                                </div>
-                                <div class="d-flex mx-4 my-1">
-                                    <div class="d-flex flex-column">
-                                        <x-adminlte-input-file name="image" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image', $user->image) }}" disable-feedback></x-adminlte-input-file>
+                                    <div class="d-flex flex-column my-1 mx-4">
+                                        <x-adminlte-input type="password" name="password" label="Contraseña" placeholder="Contraseña..." value="{{ old('password') }}" label-class="text-lightblue">
+                                            <x-slot name="prependSlot">
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-key text-lightblue"></i>
+                                                </div>
+                                            </x-slot>
+                                        </x-adminlte-input>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between mx-4 my-3">
-                                    <div class="d-flex flex-column mb-auto">
-                                        <x-adminlte-select2 name="role" label="Rol" data-placeholder="Rol..." value="{{ old('role', $user->role) }}" label-class="text-lightblue"
+                                    <div class="d-flex flex-column my-1 mx-4">
+                                        <x-adminlte-select2 name="role" label="Rol" data-placeholder="Rol..." label-class="text-lightblue"
                                             igroup-size="md">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="far fa-chart-bar text-lightblue"></i>
                                                 </div>
                                             </x-slot>
-                                            <option default value="Seleccione una opción">Seleccione una opción</option>
-                                            <option value="administrador">Administrador</option>
-                                            <option value="vicerector">Vicerector</option>
-                                            <option value="asistente">Asistente del vicerector</option>
+                                            {{-- <option>Seleccione una opción</option> --}}
+                                            <option @selected($user->role === 'administrador') value="administrador">Administrador</option>
+                                            <option @selected($user->role === 'vicerector') value="vicerector">Vicerrector</option>
+                                            <option @selected($user->role === 'asistente') value="asistente">Asistente del vicerrector</option>
+                                            <option @selected($user->role === 'comunidad_universitaria') value="comunidad universitaria">Comunidad universitaria</option>
                                         </x-adminlte-select2>
                                     </div>
-                                    <div class="d-flex flex-column my-1">
+                                </div>
+                                <div class="d-flex my-1">
+                                    <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                                        <a href="{{ route('user.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                            <span>Atrás</span>
+                                        </a>
+                                    </div>
+                                    <div class="d-flex flex-column mt-4 mx-2">
                                         <button type="submit" class="btn btn-xs btn-warning text-white py-2 px-3 shadow" title="Editar">
                                             <i class="fa fa-arrow-circle-right fa-lg"></i>
-                                            <span>Editar</span>
+                                            <span>Actualizar</span>
                                         </button>
                                     </div>
                                 </div>

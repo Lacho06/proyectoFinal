@@ -31,7 +31,7 @@ class AuthorRequest extends FormRequest
             'image' => 'nullable|image'
         ];
 
-        if($this->method('PUT')){
+        if($this->isMethod('PUT')){
             return [
                 'name' => 'required',
                 'lastname' => 'required',

@@ -24,7 +24,7 @@ class CulturalWork extends Model
     // relaciones
 
     public function plans(){
-        return $this->belongsToMany(RestorationPlan::class);
+        return $this->belongsToMany(RestorationPlan::class)->withPivot('start_date', 'end_date');
     }
 
     public function author(){
@@ -69,4 +69,7 @@ class CulturalWork extends Model
         ]);
     }
 
+    public static function generateReport(){
+        return CulturalWork::where('restore_permission', '=', 'universidad')->whereIn('state_of_disrepair', ['regular', 'deteriorado'])->orderBy('state_of_disrepair', 'asc')->orderBy('budget', 'desc')->orderBy('id', 'desc')->get();
+    }
 }

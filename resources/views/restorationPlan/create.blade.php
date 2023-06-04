@@ -41,8 +41,8 @@
                                     </div>
                                     <div class="d-flex flex-column mt-4 mr-2">
                                         <button type="submit" class="btn btn-xs btn-success text-white py-2 px-3 shadow" title="Enviar">
+                                            <span>Siguiente</span>
                                             <i class="fa fa-arrow-circle-right fa-lg"></i>
-                                            <span>Enviar</span>
                                         </button>
                                     </div>
                                 </div>

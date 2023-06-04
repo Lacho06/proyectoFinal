@@ -130,12 +130,22 @@
             outline: none;
         }
 
+        h2 a{
+            text-decoration: none;
+        }
+        h2 a:hover{
+            text-decoration: none;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
     {{-- navbar --}}
     <nav class="d-flex p-2 mb-3 justify-content-between bg-blue">
-        <h2 class="my-auto text-white">Patrimonio Cultural</h2>
+        <h2>
+            <a href="{{ route('home') }}" class="my-auto text-white">Patrimonio Cultural</a>
+        </h2>
         <div class="d-flex justify-content-end">
             @auth
                 <form action="{{ route('logout') }}" class="d-flex my-auto" method="POST">
@@ -153,8 +163,8 @@
 
     <div class="container mx-auto d-flex flex-column">
         <div class="row">
-            <div class="col-10 mx-auto d-flex justify-content-center">
-                <img src="{{ Storage::url($culturalWork->image) }}" alt="{{ $culturalWork->title }}">
+            <div class="col-10 mx-auto d-flex justify-content-center w-100 h-50">
+                <img src="{{ Storage::url($culturalWork->image) }}" id="my-image" alt="{{ $culturalWork->title }}">
             </div>
         </div>
         <div class="row">
@@ -230,8 +240,19 @@
         </div>
     </div>
 
+    <script>
+        let browserWidth = window.innerWidth;
+        let browserHeight = window.innerHeight;
+        let imageWidth = browserWidth - 100;
+        let imageHeight = browserHeight - 200;
+        let imagen = document.getElementById("my-image");
+        imagen.style.width = imageWidth + "px";
+        imagen.style.height = imageHeight + "px";
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 </html>

@@ -15,11 +15,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
                         <div class="d-flex flex-column px-4 mt-3 mb-auto">
-                            @if ($author->image)
-                                <img class="rounded-circle border border-dark" width="80" height="80" src="{{ Storage::url($author->image) }}" alt="{{ $author->name }}">
-                            @else
-                                <img class="rounded-circle border border-dark" width="80" height="80" src="{{ asset('src/icons/user.png') }}" alt="{{ $author->name }}">
-                            @endif
+                            <img class="rounded-circle border border-dark" width="80" height="80" src="{{ asset('src/icons/user.png') }}" alt="{{ $author->name }}">
                         </div>
                         <div class="d-flex flex-column my-auto">
                             <div class="d-flex my-1 w-100">
@@ -29,7 +25,7 @@
                                 </div>
                             </div>
                             <div class="d-flex my-1 w-100">
-                                <h3 class="my-auto mx-3">Apellido:</h3>
+                                <h3 class="my-auto mx-3">Apellidos:</h3>
                                 <div class="border border-dark px-3 py-1 flex-wrap my-2 w-100 ml-auto" style="width: 250px !important;">
                                     <p class="my-auto">{{ $author->lastname }}</p>
                                 </div>
@@ -48,6 +44,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex my-1">
+                        <div class="d-flex flex-column mt-4 ml-auto mr-2">
+                            <a href="{{ route('author.index') }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">
+                                <span>Atrás</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +67,7 @@
                 icon: 'success',
                 title: message[0].innerText,
                 showConfirmButton: false,
-                timer: 1500
+                timer: 2000
             })
         }
     </script>
