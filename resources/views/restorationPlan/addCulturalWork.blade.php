@@ -99,9 +99,11 @@
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <div class="d-flex flex-column mt-4 mx-2">
-                                        <a href="{{ route('restorationPlan.generatePlan', $plan->id) }}" class="btn btn-xs btn-primary text-white py-2 px-3 shadow" title="Generar plan">
-                                            <span>Generar plan</span>
-                                        </a>
+                                        <form action="{{ route('restorationPlan.generatePlan') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                                            <input type="submit" class="btn btn-xs btn-primary text-white py-2 px-3 shadow" value="Generar plan">
+                                        </form>
                                     </div>
                                     <div class="d-flex flex-column mt-4 mx-2">
                                         <a href="{{ route('restorationPlan.show', $plan->id) }}" class="btn btn-xs btn-danger text-white py-2 px-3 shadow">

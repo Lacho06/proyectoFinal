@@ -16,29 +16,31 @@
 
     {{-- Navbar right links --}}
     <ul class="navbar-nav ml-auto w-100">
-        <li class="dropdown">
-            <a id="navbarDropdownNotification" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-bell"></i>
-                <span class="badge badge-light bg-danger badge-xs">{{auth()->user()->unreadNotifications->count()}}</span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownNotification">
-                <h6 class="dropdown-header">Notificaciones</h6>
-                <div class="dropdown-divider"></div>
-                <ul>
-                    @if (auth()->user()->unreadNotifications)
-                        <li class="d-flex justify-content-end mx-1 my-2">
-                            <a href="{{route('mark-all-as-read')}}" class="btn btn-success btn-sm dropdown-item">Marcar todo como leído</a>
-                        </li>
+        @if (auth()->user()->role == 'vicerector')
+            <div class="dropdown">
+                <a id="navbarDropdownNotification" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-bell"></i>
+                    @if (auth()->user()->unreadNotifications->count() !== 0)
+                        <span class="badge badge-light bg-danger badge-xs">{{auth()->user()->unreadNotifications->count()}}</span>
                     @endif
-                    @foreach (auth()->user()->unreadNotifications as $notification)
-                        <a href="{{ route('mark-as-read', $notification->id) }}" class="text-success"><li class="p-1 text-success dropdown-item">{{$notification->data['data']}}</li></a>
-                    @endforeach
-                    @foreach (auth()->user()->readNotifications()->take(5)->orderBy('updated_at', 'desc')->get() as $notification)
-                        <li class="p-1 text-secondary dropdown-item">{{$notification->data['data']}}</li>
-                    @endforeach
-                </ul>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownNotification">
+                    <h6 class="dropdown-header">Notificaciones</h6>
+                    <div class="dropdown-divider"></div>
+                    <ul class="d-flex flex-column align-items-start">
+                        @if (auth()->user()->unreadNotifications)
+                            <a href="{{route('mark-all-as-read')}}" class="btn btn-success btn-sm dropdown-item">Marcar todo como leído</a>
+                        @endif
+                        @foreach (auth()->user()->unreadNotifications as $notification)
+                            <a href="{{ route('mark-as-read', $notification->id) }}" class="text-success"><li class="text-success dropdown-item">{{$notification->data['data']}}</li></a>
+                        @endforeach
+                        @foreach (auth()->user()->readNotifications()->take(5)->orderBy('updated_at', 'desc')->get() as $notification)
+                            <li class="text-secondary dropdown-item">{{$notification->data['data']}}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-        </li>
+        @endif
         <div class="dropdown ml-auto">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i> <span>{{ auth()->user()->name }}</span>

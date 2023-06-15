@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content_header')
-    <h2>Crear Autor</h2>
+    <h2>Crear autor</h2>
     <div class="mb-3"></div>
 @endsection
 @section('content')

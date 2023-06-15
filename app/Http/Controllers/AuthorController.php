@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AuthorController extends Controller
 {
-    // TODO: boton pa dar atras en las pantallas
     public function index(){
         $authors = Author::all();
         Session::forget('message');
@@ -28,7 +27,7 @@ class AuthorController extends Controller
     public function store(AuthorRequest $request){
         $author = Author::saveAuthor($request);
         Session::forget('message');
-        $message = "Autor Creado";
+        $message = "Autor creado";
         Session::flash('message', $message);
 
         return redirect()->route('author.show', $author);
@@ -41,7 +40,7 @@ class AuthorController extends Controller
     public function update(AuthorRequest $request, Author $author){
         $author->updateAuthor($request);
         Session::forget('message');
-        $message = "Autor Actualizado";
+        $message = "Autor actualizado";
         Session::flash('message', $message);
 
         return redirect()->route('author.show', $author);

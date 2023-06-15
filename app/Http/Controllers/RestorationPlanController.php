@@ -38,8 +38,11 @@ class RestorationPlanController extends Controller
         return view('restorationPlan.addCulturalWork', compact('plan', 'culturalWorks'));
     }
 
-    public function generatePlan($id){
-        $plan = RestorationPlan::find($id);
+    public function generatePlan(Request $request){
+        $request->validate([
+            'plan_id' => 'required|exists:restoration_plans,id'
+        ]);
+        $plan = RestorationPlan::find($request->plan_id);
         $totalBudget = $plan->annual_budget;
         $count = 0;
 
@@ -105,7 +108,8 @@ class RestorationPlanController extends Controller
             'restorationPlan_id' => 'required|exists:restoration_plans,id',
             'culturalWork_id' => 'required|exists:cultural_works,id',
             'start_date' => 'required|date',
-            'end_date' => 'required|date'
+            'end_date' => 'required|date',
+            'form_type' => 'nullable',
         ]);
 
         Session::forget('message');
@@ -130,13 +134,17 @@ class RestorationPlanController extends Controller
         $culturalWorks = CulturalWork::whereNotIn('id', function ($query) use ($plan) {
             $query->select('cultural_work_id')->from('cultural_work_restoration_plan')->where('cultural_work_restoration_plan.restoration_plan_id', $plan->id);
         })->get();
+        if($request->form_type && $request->form_type == 'edit'){
+            return view('restorationPlan.edit', compact('plan', 'culturalWorks'));
+        }
         return view('restorationPlan.addCulturalWork', compact('plan', 'culturalWorks'));
     }
 
     public function unassociateCulturalWork(Request $request){
         $request->validate([
             'culturalWork_id' => 'required|exists:cultural_works,id',
-            'restorationPlan_id' => 'required|exists:restoration_plans,id'
+            'restorationPlan_id' => 'required|exists:restoration_plans,id',
+            'form_type' => 'nullable',
         ]);
         $culturalWork = CulturalWork::find($request->culturalWork_id);
         $plan = RestorationPlan::find($request->restorationPlan_id);
@@ -145,6 +153,9 @@ class RestorationPlanController extends Controller
         $culturalWorks = CulturalWork::whereNotIn('id', function ($query) use ($plan) {
             $query->select('cultural_work_id')->from('cultural_work_restoration_plan')->where('cultural_work_restoration_plan.restoration_plan_id', $plan->id);
         })->get();
+        if($request->form_type && $request->form_type == 'edit'){
+            return view('restorationPlan.edit', compact('plan', 'culturalWorks'));
+        }
         return view('restorationPlan.addCulturalWork', compact('plan', 'culturalWorks'));
     }
 
@@ -162,7 +173,8 @@ class RestorationPlanController extends Controller
         return redirect()->route('restorationPlan.show', $plan->id);
     }
 
-    public function destroy(RestorationPlan $plan){
+    public function destroy($id){
+        $plan = RestorationPlan::find($id);
         $plan->delete();
         return back();
     }

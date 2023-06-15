@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PlanRequest extends FormRequest
 {
@@ -23,15 +24,15 @@ class PlanRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'year' => 'required|unique:restoration_plans,year|numeric|digits:4|min:0',
+            'annual_budget' => 'required|numeric|min:1',
+            'approval' => 'nullable',
+        ];
+
         if($this->isMethod('PUT')){
             $rules = [
-                'year' => 'required|unique:restoration_plans,year|numeric|digits:4|min:0',
-                'annual_budget' => 'required|numeric|min:1',
-                'approval' => 'nullable',
-            ];
-        }else{
-            $rules = [
-                'year' => 'required|numeric|digits:4|min:0',
+                'year' => ['required', 'numeric', 'digits:4', 'min:0', Rule::unique('restoration_plans')->ignore($this->route('restorationPlan'))],
                 'annual_budget' => 'required|numeric|min:1',
                 'approval' => 'nullable',
             ];

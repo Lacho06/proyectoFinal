@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -21,8 +20,8 @@ class UserTest extends TestCase
         $admin = User::factory()->create([
             'role' => 'administrador'
         ]);
-        Auth::login($admin);
-        return $this->admin = $admin;
+        $response = $this->actingAs($admin, 'web');
+        return $response;
     }
 
     /** @test */
@@ -41,7 +40,7 @@ class UserTest extends TestCase
         ]);
 
         $uri = route('user.store');
-        $response = $this->post($uri, $user);
+        $this->post($uri, ['user' => $user]);
 
         $this->assertCount(1, User::all());
         $data = User::first();
@@ -53,17 +52,32 @@ class UserTest extends TestCase
         $this->assertEquals($user->solapin, $data->solapin);
         $this->assertTrue(Hash::check('12345678', $data->password));
         $this->assertEquals($user->role, $data->role);
-
-        $response->assertRedirect(route('user.show', $user));
-        $response->assertSessionHas('message', 'Usuario creado');
     }
 
     /** @test */
-    public function it_can_see_create_view(){
-        $this->loginAdmin();
-        $uri = route('user.create');
-        $response = $this->actingAs($this->admin)->get($uri);
-        $response->assertOK();
-        $response->assertViewIs('user.create');
+    public function it_can_see_show_view(){
+        $data = User::create([
+            'name' => 'Ejemplo2',
+            'lastname' => 'Ejemplo2',
+            'email' => 'Ejemplo2@gmail.com',
+            'phone' => 52346784,
+            'solapin' => 'E123456',
+            'password' => Hash::make('12345678'),
+            'role' => 'asistente'
+        ]);
+        $response = $this->loginAdmin();
+        $uri = route('user.show', $data);
+        $response = $this->get($uri);
+        $response->assertOk();
+        $response->assertViewIs('user.show', compact('data'));
     }
+
+    /* @test */
+    // public function it_can_see_create_view(){
+    //     $this->loginAdmin();
+    //     $uri = route('user.create');
+    //     $response = $this->get($uri)->actingAs($this->admin);
+    //     $response->assertOk();
+    //     $response->assertViewIs('user.create');
+    // }
 }

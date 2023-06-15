@@ -92,12 +92,13 @@
                                 <div class="d-flex">
                                     <div class="d-flex flex-column my-1 mx-4 w-100">
                                         <x-adminlte-textarea name="review" label="Reseña" rows=8 igroup-size="sm"
-                                            label-class="text-primary" value="{{ old('review') }}" placeholder="Reseña...">
+                                            label-class="text-primary" placeholder="Reseña...">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-align-justify text-lightblue"></i>
                                                 </div>
                                             </x-slot>
+                                            {{ old('review') }}
                                         </x-adminlte-textarea>
                                     </div>
                                 </div>

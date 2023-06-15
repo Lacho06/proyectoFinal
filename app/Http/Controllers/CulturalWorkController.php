@@ -9,6 +9,7 @@ use App\Models\Score;
 use App\Models\User;
 use App\Notifications\CulturalWorkRestored;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;

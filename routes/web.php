@@ -28,7 +28,7 @@ Route::post('admin/plan/associate-cultural-work', [RestorationPlanController::cl
 
 Route::post('admin/plan/unassociate-cultural-work', [RestorationPlanController::class, 'unassociateCulturalWork'])->name('restorationPlan.unassociateCulturalWork');
 
-Route::get('admin/plan/{restoration_plan}/generate-plan', [RestorationPlanController::class, 'generatePlan'])->name('restorationPlan.generatePlan');
+Route::post('admin/plan/generate-plan', [RestorationPlanController::class, 'generatePlan'])->name('restorationPlan.generatePlan');
 
 Route::get('admin/plan/generate-report', [RestorationPlanController::class, 'generateReport'])->name('restorationPlan.generateReport');
 

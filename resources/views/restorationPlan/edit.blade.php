@@ -5,6 +5,10 @@
 @endsection
 @section('content')
 
+    @if (Session::has('message'))
+        <div class="d-none message">{{ Session::get('message') }}</div>
+    @endif
+
     <div class="row">
         <div class="col-12 col-md-10 d-flex m-0 p-0">
             <div class="col-12 card m-0 ml-3 mb-4 py-2">
@@ -67,7 +71,8 @@
                                                                 @csrf
                                                                 <input type="hidden" name="culturalWork_id" value="{{ $culturalWork->id }}">
                                                                 <input type="hidden" name="restorationPlan_id" value="{{ $plan->id }}">
-                                                                <button type="submit" class="btn btn-xs btn-danger btn-delete text-white py-1 mx-1 shadow" title="Desvincular">
+                                                                <input type="hidden" name="form_type" value="edit">
+                                                                <button class="btn btn-xs btn-danger btn-delete text-white py-1 mx-1 shadow" title="Desvincular">
                                                                     <i class="fa fa-lg fa-fw fa-trash"></i>
                                                                 </button>
                                                             </form>
@@ -117,6 +122,7 @@
                                                             <option value="" disabled>No hay obras para mostrar</option>
                                                         @endforelse
                                                     </x-adminlte-select2>
+                                                    <input type="hidden" name="form_type" value="edit">
                                                     <x-adminlte-input type="date" required min="{{ date('Y-m-d') }}" name="start_date" label="Fecha inicial" placeholder="Fecha inicial..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
                                                     <x-adminlte-input type="date" required min="{{ date('Y-m-d') }}" name="end_date" label="Fecha final" placeholder="Fecha final..." value="{{ old('end_date') }}" label-class="text-lightblue"></x-adminlte-input>
                                                     <input type="hidden" name="restorationPlan_id" value="{{ $plan->id }}">

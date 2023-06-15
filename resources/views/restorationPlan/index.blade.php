@@ -67,7 +67,7 @@
                         <i class="fa fa-lg fa-fw fa-trash"></i>
                         <span>Eliminar</span>
                     </button>
-                    <form action="{{ route('restorationPlan.destroy', $plan) }}" class="d-none form-delete" method="post">
+                    <form action="{{ route('restorationPlan.destroy', $plan->id) }}" class="d-none form-delete" method="post">
                         @csrf @method("DELETE")
                         <input type="submit" value="Send">
                     </form>

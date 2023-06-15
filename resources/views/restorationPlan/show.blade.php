@@ -5,10 +5,6 @@
 @endsection
 @section('content')
 
-    @if (Session::has('message'))
-        <div class="d-none message">{{ Session::get('message') }}</div>
-    @endif
-
     <div class="row">
         <div class="col-12 col-md-10 d-flex m-0 p-0">
             <div class="col-12 card m-0 py-3 px-5">

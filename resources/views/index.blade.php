@@ -163,6 +163,10 @@
         </h2>
         <div class="d-flex justify-content-end">
             @auth
+                @if (auth()->user()->role === 'administrador' || auth()->user()->role === 'vicerector' || auth()->user()->role === 'asistente')
+                    <a href="{{ route('admin.index') }}" class="text-white my-login mx-2 my-auto">Panel administrativo</a>
+                @endif
+
                 <form action="{{ route('logout') }}" class="d-flex my-auto" method="POST">
                     @csrf
                     <input type="submit" class="text-white my-login bg-blue mx-2 my-auto" value="Cerrar sesión" />

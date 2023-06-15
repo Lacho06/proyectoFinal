@@ -97,21 +97,21 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex flex-column my-1 mx-4 w-100">
                                         <x-adminlte-textarea name="review" label="Reseña" rows=8 igroup-size="sm"
-                                            label-class="text-primary" placeholder="Reseña..." disable-feedback>
-                                            {{ old('review', $culturalWork->review) }}
+                                            label-class="text-primary" placeholder="Reseña...">
                                             <x-slot name="prependSlot">
                                                 <div class="input-group-text">
                                                     <i class="fa fa-align-justify text-lightblue"></i>
                                                 </div>
                                             </x-slot>
+                                            {{ old('review', $culturalWork->review) }}
                                         </x-adminlte-textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex flex-column mx-4 w-100">
-                                        <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image', $culturalWork->image) }}" disable-feedback></x-adminlte-input-file>
+                                        <x-adminlte-input-file name="image" class="image-value" label="Imagen" label-class="text-lightblue" placeholder="Imagen..." value="{{ old('image', $culturalWork->image) }}"></x-adminlte-input-file>
                                         <div style="aspect-ratio: 1/1; display: flex; border: 1px solid rgba(128, 128, 128, .5); z-index: 5;">
-                                            <img class="image-container" style="aspect-ratio: 1/1; max-width: 300px; max-height: 300px;" alt="No hay ninguna imagen seleccionada">
+                                            <img class="image-container" style="aspect-ratio: 1/1; max-width: 300px; max-height: 300px;" src="{{ old('image', Storage::url($culturalWork->image)) }}" alt="No hay ninguna imagen seleccionada">
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column mx-4 w-100">
