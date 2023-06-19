@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -17,11 +18,31 @@ class UserTest extends TestCase
     public $admin;
 
     public function loginAdmin(){
-        $admin = User::factory()->create([
+        $this->admin = User::create([
+            'name' => 'Admin',
+            'lastname' => 'Admin',
+            'email' => 'Admin@gmail.com',
+            'phone' => 52346784,
+            'solapin' => 'E123456',
+            'password' => bcrypt('12345678'),
             'role' => 'administrador'
         ]);
-        $response = $this->actingAs($admin, 'web');
-        return $response;
+
+        $this->assertCredentials([
+            'email' => $this->admin->email,
+            'password' => 12345678
+        ]);
+        Auth::login($this->admin);
+        $this->assertAuthenticatedAs($this->admin);
+    }
+
+    /** @test */
+    public function it_can_see_index_view(){
+        $response = $this->loginAdmin();
+        $uri = route('user.index');
+        $response = $this->get($uri);
+        $response->assertOk();
+        $response->assertViewIs('user.index');
     }
 
     /** @test */
@@ -56,7 +77,25 @@ class UserTest extends TestCase
 
     /** @test */
     public function it_can_see_show_view(){
-        $data = User::create([
+        $response = $this->loginAdmin();
+        $uri = route('user.show', ['user', $this->admin]);
+        $response = $this->get($uri, $this->admin);
+        $response->assertOk();
+        $response->assertViewIs('user.show', compact('admin'));
+    }
+
+    /** @test */
+    public function it_can_see_edit_view(){
+        $response = $this->loginAdmin();
+        $uri = route('user.edit', $this->admin);
+        $response = $this->get($uri);
+        $response->assertOk();
+        $response->assertViewIs('user.edit', compact('admin'));
+    }
+
+    /** @test */
+    public function it_can_delete_user(){
+        $user = User::create([
             'name' => 'Ejemplo2',
             'lastname' => 'Ejemplo2',
             'email' => 'Ejemplo2@gmail.com',
@@ -65,19 +104,8 @@ class UserTest extends TestCase
             'password' => Hash::make('12345678'),
             'role' => 'asistente'
         ]);
-        $response = $this->loginAdmin();
-        $uri = route('user.show', $data);
-        $response = $this->get($uri);
-        $response->assertOk();
-        $response->assertViewIs('user.show', compact('data'));
+        $this->assertCount(1, User::all());
+        $user->delete();
+        $this->assertCount(0, User::all());
     }
-
-    /* @test */
-    // public function it_can_see_create_view(){
-    //     $this->loginAdmin();
-    //     $uri = route('user.create');
-    //     $response = $this->get($uri)->actingAs($this->admin);
-    //     $response->assertOk();
-    //     $response->assertViewIs('user.create');
-    // }
 }
