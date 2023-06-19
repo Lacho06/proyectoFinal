@@ -82,7 +82,7 @@
                                             </x-slot>
                                             <option disabled selected value="">Seleccione una opción</option>
                                             @forelse ($authors as $author)
-                                                <option @selected(old('author_id') == $author->id) value="{{ $author->id }}">{{ $author->name }}</option>
+                                                <option @selected(old('author_id') == $author->id) value="{{ $author->id }}">{{ $author->name." ".$author->lastname }}</option>
                                             @empty
                                                 <option disabled>No hay autores disponibles</option>
                                             @endforelse
