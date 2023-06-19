@@ -87,7 +87,7 @@
                                                     @if ($culturalWork->author)
                                                         @selected($culturalWork->author->id == $author->id)
                                                     @endif
-                                                >{{ $author->name }}</option>
+                                                >{{ $author->name." ".$author->lastname }}</option>
                                             @empty
                                                 <option disabled>No hay autores disponibles</option>
                                             @endforelse
