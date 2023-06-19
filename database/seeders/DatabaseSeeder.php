@@ -29,25 +29,28 @@ class DatabaseSeeder extends Seeder
             'role' => 'administrador',
         ]);
 
-        User::factory(20)->create();
+        if(env('APP_ENV') === 'local'){
+            User::factory(20)->create();
 
-        for($i = 0; $i < 10; $i++){
-            $plan = RestorationPlan::factory(1)->create();
-            for($j = 0; $j < rand(2, 5); $j++){
-                $authorData = Author::factory(1)->create();
-                $author = Author::find($authorData->pluck('id')->toArray())->first();
+            for($i = 0; $i < 10; $i++){
+                $plan = RestorationPlan::factory(1)->create();
+                for($j = 0; $j < rand(2, 5); $j++){
+                    $authorData = Author::factory(1)->create();
+                    $author = Author::find($authorData->pluck('id')->toArray())->first();
 
-                $culturalWorkData = CulturalWork::factory(1)->create([
-                    'author_id' => $author->id
-                ]);
+                    $culturalWorkData = CulturalWork::factory(1)->create([
+                        'author_id' => $author->id
+                    ]);
 
-                $culturalWork = CulturalWork::find($culturalWorkData->pluck('id')->toArray())->first();
+                    $culturalWork = CulturalWork::find($culturalWorkData->pluck('id')->toArray())->first();
 
-                $culturalWork->plans()->attach($plan->pluck('id')->toArray(), [
-                    'start_date' => null,
-                    'end_date' => null,
-                ]);
+                    $culturalWork->plans()->attach($plan->pluck('id')->toArray(), [
+                        'start_date' => null,
+                        'end_date' => null,
+                    ]);
+                }
             }
         }
+
     }
 }
