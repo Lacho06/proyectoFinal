@@ -191,7 +191,7 @@
                     <h2>Ubicación: <span>{{ $culturalWork->location }}</span></h2>
                     <h2>Autor:
                         @if ($culturalWork->author)
-                            <span>{{ $culturalWork->author->name }}</span>
+                            <span>{{ $culturalWork->author->name." ".$culturalWork->author->lastname }}</span>
                         @else
                             <span>No tiene</span>
                         @endif
