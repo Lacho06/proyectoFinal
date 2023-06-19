@@ -246,7 +246,7 @@
                                     <h2 class="my-title">{{ $culturalWork->title }}</h2>
                                 </div>
                                 @if ($culturalWork->author)
-                                    <h4 class="my-author"><span>Autor: </span> {{ $culturalWork->author->name }}</h4>
+                                    <h4 class="my-author"><span>Autor: </span> {{ $culturalWork->author->name." ".$culturalWork->author->lastname }}</h4>
                                 @else
                                     <h4 class="my-author"><span>Autor: </span> No tiene</h4>
                                 @endif
